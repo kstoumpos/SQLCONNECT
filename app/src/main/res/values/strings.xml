@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Krishna Softwares</string>
+    <string name="app_name">Orders App</string>
     <string name="action_settings">Settings</string>
+    <string name="UserId">USER ID</string>
+    <string name="PASSWORD">PASSWORD</string>
+    <string name="Login">Login</string>
 </resources>
