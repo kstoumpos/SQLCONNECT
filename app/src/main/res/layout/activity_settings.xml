@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    android:orientation="vertical"
+    android:background="#FFF9C4">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/settings" />
+        android:contentDescription="@string/settings"
+        android:text="@string/action_settings"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-</android.support.constraint.ConstraintLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/linearLayout3">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/dbUser"
+        android:id="@+id/db_username"
+        android:inputType="textCapWords" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:hint="@string/dbPass"
+        android:layout_marginTop="10dp"
+        android:id="@+id/db_password"
+        android:inputType="textPassword"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:hint="@string/dbName"
+        android:layout_marginTop="10dp"
+        android:id="@+id/db_name"
+        android:inputType="textPassword"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:hint="@string/dbIP"
+        android:layout_marginTop="10dp"
+        android:id="@+id/db_ip"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_save"
+        android:text="@string/save" />
+
+</LinearLayout>
+
+
+</RelativeLayout>
