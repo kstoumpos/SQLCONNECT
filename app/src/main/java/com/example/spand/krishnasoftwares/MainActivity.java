@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity
 
             if(isSuccess) {
                 Toast.makeText(MainActivity.this,r,Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(MainActivity.this, TableCategoriesActivity.class);
+                MainActivity.this.startActivity(myIntent);
             }
 
         }
@@ -119,16 +121,14 @@ public class MainActivity extends AppCompatActivity
 
                         if(rs.next())
                         {
-
                             z = "Login successfull";
-                            isSuccess=true;
+                            isSuccess = true;
                         }
                         else
                         {
                             z = "Invalid Credentials";
                             isSuccess = false;
                         }
-
                     }
                 }
                 catch (Exception ex)
