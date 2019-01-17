@@ -4,4 +4,5 @@
     <string name="UserId">USER ID</string>
     <string name="PASSWORD">PASSWORD</string>
     <string name="Login">Login</string>
+    <string name="settings">Settings</string>
 </resources>
