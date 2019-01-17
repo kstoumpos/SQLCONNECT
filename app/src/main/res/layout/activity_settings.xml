@@ -24,6 +24,13 @@
     android:layout_centerHorizontal="true"
     android:id="@+id/linearLayout3">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
