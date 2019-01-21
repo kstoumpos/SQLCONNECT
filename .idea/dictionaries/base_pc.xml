@@ -5,7 +5,9 @@
       <w>edtpass</w>
       <w>edtuserid</w>
       <w>pbbar</w>
+      <w>resultset</w>
       <w>successfull</w>
+      <w>userid</w>
     </words>
   </dictionary>
 </component>

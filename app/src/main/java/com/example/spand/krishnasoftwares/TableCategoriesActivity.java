@@ -80,7 +80,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         while (rs.next())
                         {
                             try {
-                                Log.e("Result: ", rs.toString());
+                                Log.e("id: ", rs.getString("id"));
+                                Log.e("name: ", rs.getString("name"));
                                 itemArrayList.add(new TableCategoryItem(rs.getString("id"),rs.getString("name")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -110,7 +111,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
         {
             progress.dismiss();
             Toast.makeText(TableCategoriesActivity.this, msg + "", Toast.LENGTH_LONG).show();
-            if (success == false)
+            if (!success)
             {
             }
             else {
@@ -119,9 +120,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     listView.setAdapter(myCategoryAdapter);
                 } catch (Exception ex)
-
                 {
-
                 }
 
             }
