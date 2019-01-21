@@ -2,6 +2,7 @@ package com.example.spand.krishnasoftwares;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -34,9 +35,9 @@ public class TableCategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_table_categories);
 
-        listView = (ListView) findViewById(R.id.listView); //ListView Declaration
+        listView = findViewById(R.id.listView); //ListView Declaration
         connectionClass = new ConnectionClass(); // Connection Class Initialization
         itemArrayList = new ArrayList<>(); // ArrayList Initialization
 
@@ -71,7 +72,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                 else {
                     Log.e("CONNECTED", "Ready for query");
                     // Change below query according to your own database.
-                    String query = "select id,name FROM tbl_Category";
+                    String query = "select id, name FROM tbl_Category";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) // if resultset not null, I add items to itemArrayList using class created
@@ -82,7 +83,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                             try {
                                 Log.e("id: ", rs.getString("id"));
                                 Log.e("name: ", rs.getString("name"));
-                                itemArrayList.add(new TableCategoryItem(rs.getString("id"),rs.getString("name")));
+                                itemArrayList.add(new TableCategoryItem(rs.getString("name"),rs.getInt("id")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
@@ -111,18 +112,44 @@ public class TableCategoriesActivity extends AppCompatActivity {
         {
             progress.dismiss();
             Toast.makeText(TableCategoriesActivity.this, msg + "", Toast.LENGTH_LONG).show();
+            Log.e("success", "is true");
             if (!success)
             {
+                Log.e("success", "is false");
             }
             else {
                 try {
                     myCategoryAdapter = new MyAppAdapter(itemArrayList, TableCategoriesActivity.this);
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
                     listView.setAdapter(myCategoryAdapter);
+
+                    Log.e("adapter: ", "OK");
                 } catch (Exception ex)
                 {
+                    Log.e("adapter: ", "ERROR");
+                    Log.e("error: ", ex.toString());
                 }
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapter, View v, int position,
+                                            long arg3)
+                    {
+                        TableCategoryItem TableCategoryItem = itemArrayList.get(position);
+                        String name  = TableCategoryItem.getName();
+                        Log.e("Category name: ", name);
+                        int id = TableCategoryItem.getId();
+                        Log.e("Category id: ", id+"");
+                        Log.e("item clicked", position+"");
+
+                        Intent i = new Intent(TableCategoriesActivity.this, TablesActivity.class);
+                        i.putExtra("catName", name);
+                        i.putExtra("catId", id);
+                        startActivity(i);
+                    }
+                });
             }
         }
     }
@@ -132,6 +159,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
         public class ViewHolder
         {
             TextView textName;
+            TextView imageView;
         }
 
         public List<TableCategoryItem> categoryList;
@@ -139,11 +167,11 @@ public class TableCategoriesActivity extends AppCompatActivity {
         public Context context;
         ArrayList<TableCategoryItem> arrayList;
 
-        private MyAppAdapter(List<TableCategoryItem> category, Context context)
+        private MyAppAdapter(List<TableCategoryItem> apps, Context context)
         {
-            this.categoryList = category;
+            this.categoryList = apps;
             this.context = context;
-            arrayList = new ArrayList<>();
+            arrayList = new ArrayList<TableCategoryItem>();
             arrayList.addAll(categoryList);
         }
 
@@ -167,22 +195,25 @@ public class TableCategoriesActivity extends AppCompatActivity {
         {
 
             View rowView = convertView;
-            ViewHolder viewHolder = null;
+            ViewHolder viewHolder= null;
             if (rowView == null)
             {
                 LayoutInflater inflater = getLayoutInflater();
                 rowView = inflater.inflate(R.layout.list_content, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.textName = (TextView) rowView.findViewById(R.id.textName);
+                viewHolder.imageView = (TextView) rowView.findViewById(R.id.imageView);
                 rowView.setTag(viewHolder);
             }
             else
             {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            // here setting up names
+            // here setting up names and images
             viewHolder.textName.setText(categoryList.get(position).getName()+"");
+            viewHolder.imageView.setText(categoryList.get(position).getId()+"");
 
+            Log.e("Category ListView: ", "OK");
             return rowView;
         }
     }

@@ -21,13 +21,13 @@
         android:textStyle="bold"
         android:text="@string/categories"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/categoryTitle"
-        android:choiceMode="multipleChoice"
-        android:id="@+id/listView"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryTitle"
+            android:choiceMode="multipleChoice"
+            android:id="@+id/listView"/>
 
     </RelativeLayout>
 

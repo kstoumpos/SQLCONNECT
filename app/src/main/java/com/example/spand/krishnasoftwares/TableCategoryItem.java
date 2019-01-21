@@ -2,20 +2,21 @@ package com.example.spand.krishnasoftwares;
 
 public class TableCategoryItem {
 
-    public String name; //Name
-    public String id; //ID
 
-    public TableCategoryItem(String name, String id)
-    {
-        this.name = name;
-        this.id = id;
-    }
+        public int catId; //id
+        public String name; //Name
 
-    public String getName() {
-        return name;
-    }
+        public TableCategoryItem(String name, int catId)
+        {
+            this.catId = catId;
+            this.name = name;
+        }
 
-    public String getId() {
-        return id;
+        public int getId() {
+            return catId;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
-}
