@@ -1,6 +1,6 @@
 package com.steam.app.pdaOrder.Model;
 
-public class Table {
+public class TableItem {
 
     private int TableId;
     private String TableName;
@@ -11,16 +11,17 @@ public class Table {
     private int TableState;
     private int TableCurPeople;
 
-    public Table(int TableId, String TableName, int TableCapacity, int TableCatId, int TableVisPriority, int TableShopType, int TableState, int TableCurPeople)
+    //public TableItem(int TableId, String TableName, int TableCapacity, int TableCatId, int TableVisPriority, int TableShopType, int TableState, int TableCurPeople)
+    public TableItem(int TableId, String TableName)
     {
-        this.TableCapacity = TableCapacity;
+        //this.TableCapacity = TableCapacity;
         this.TableId = TableId;
         this.TableName = TableName;
-        this.TableCatId = TableCatId;
-        this.TableCurPeople = TableCurPeople;
-        this.TableVisPriority = TableVisPriority;
-        this.TableShopType = TableShopType;
-        this.TableState = TableState;
+//        this.TableCatId = TableCatId;
+//        this.TableCurPeople = TableCurPeople;
+//        this.TableVisPriority = TableVisPriority;
+//        this.TableShopType = TableShopType;
+//        this.TableState = TableState;
     }
 
     public int getTableId() {
@@ -43,24 +44,12 @@ public class Table {
         return TableCapacity;
     }
 
-    public void setTableCapacity(int tableCapacity) {
-        TableCapacity = tableCapacity;
-    }
-
     public int getTableCatId() {
         return TableCatId;
     }
 
-    public void setTableCatId(int tableCatId) {
-        TableCatId = tableCatId;
-    }
-
     public int getTableVisPriority() {
         return TableVisPriority;
-    }
-
-    public void setTableVisPriority(int tableVisPriority) {
-        TableVisPriority = tableVisPriority;
     }
 
     public int getTableShopType() {
@@ -75,15 +64,8 @@ public class Table {
         return TableState;
     }
 
-    public void setTableState(int tableState) {
-        TableState = tableState;
-    }
-
     public int getTableCurPeople() {
         return TableCurPeople;
     }
 
-    public void setTableCurPeople(int tableCurPeople) {
-        TableCurPeople = tableCurPeople;
-    }
 }

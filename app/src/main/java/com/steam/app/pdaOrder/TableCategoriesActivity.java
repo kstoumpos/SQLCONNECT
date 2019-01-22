@@ -202,7 +202,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
             if (rowView == null)
             {
                 LayoutInflater inflater = getLayoutInflater();
-                rowView = inflater.inflate(R.layout.list_content, parent, false);
+                rowView = inflater.inflate(R.layout.category_content, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.textName = (TextView) rowView.findViewById(R.id.textName);
                 viewHolder.imageView = (TextView) rowView.findViewById(R.id.imageView);

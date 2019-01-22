@@ -2,12 +2,15 @@
   <dictionary name="base-pc">
     <words>
       <w>btnlogin</w>
+      <w>catid</w>
       <w>edtpass</w>
       <w>edtuserid</w>
       <w>pbbar</w>
       <w>resultset</w>
+      <w>shoptype</w>
       <w>successfull</w>
       <w>userid</w>
+      <w>vispriority</w>
     </words>
   </dictionary>
 </component>
