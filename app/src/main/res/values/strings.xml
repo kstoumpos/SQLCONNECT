@@ -11,4 +11,5 @@
     <string name="dbIP">Server IP</string>
     <string name="save">Save</string>
     <string name="categories">Categories</string>
+    <string name="productCat">Choose product category</string>
 </resources>
