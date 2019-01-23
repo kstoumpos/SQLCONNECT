@@ -3,14 +3,18 @@
     <words>
       <w>btnlogin</w>
       <w>catid</w>
+      <w>compl</w>
       <w>edtpass</w>
       <w>edtuserid</w>
+      <w>paragwghs</w>
       <w>pbbar</w>
+      <w>precent</w>
       <w>resultset</w>
       <w>shoptype</w>
       <w>successfull</w>
       <w>userid</w>
       <w>vispriority</w>
+      <w>whcode</w>
     </words>
   </dictionary>
 </component>

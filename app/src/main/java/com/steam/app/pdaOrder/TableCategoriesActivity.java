@@ -162,7 +162,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
         public class ViewHolder
         {
             TextView textName;
-            TextView imageView;
+            TextView textId;
         }
 
         public List<TableCategoryItem> categoryList;
@@ -204,8 +204,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 rowView = inflater.inflate(R.layout.category_content, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.textName = (TextView) rowView.findViewById(R.id.textName);
-                viewHolder.imageView = (TextView) rowView.findViewById(R.id.imageView);
+                viewHolder.textName = rowView.findViewById(R.id.textName);
+                viewHolder.textId = rowView.findViewById(R.id.textCatId);
                 rowView.setTag(viewHolder);
             }
             else
@@ -214,7 +214,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
             }
             // here setting up names and images
             viewHolder.textName.setText(categoryList.get(position).getName()+"");
-            viewHolder.imageView.setText(categoryList.get(position).getId()+"");
+            viewHolder.textId.setText(categoryList.get(position).getId()+"");
 
             Log.e("Category ListView: ", "OK");
             return rowView;

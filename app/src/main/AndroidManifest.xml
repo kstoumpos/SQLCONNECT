@@ -12,10 +12,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.steam.app.pdaOrder.TableCategoriesActivity"></activity>
-        <activity android:name="com.steam.app.pdaOrder.TablesActivity" />
-        <activity android:name="com.steam.app.pdaOrder.SettingsActivity" />
-        <activity android:name="com.steam.app.pdaOrder.MainActivity">
+        <activity android:name=".SingleTableActivity"></activity>
+        <activity android:name=".TableCategoriesActivity" />
+        <activity android:name=".TablesActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
