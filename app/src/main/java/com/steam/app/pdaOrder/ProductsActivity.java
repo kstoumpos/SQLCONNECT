@@ -3,7 +3,6 @@ package com.steam.app.pdaOrder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.steam.app.pdaOrder.Model.ProductCategory;
+
+import com.steam.app.pdaOrder.Model.Product;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -26,27 +27,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleTableActivity extends AppCompatActivity {
 
-    private ArrayList<ProductCategory> PCArrayList;  //List items Array
-    private SingleTableActivity.MyAppAdapter myProductCategoryAdapter; //Array Adapter
-    private ListView PCListView; // ListView
+public class ProductsActivity extends AppCompatActivity {
+
+    private ArrayList<Product> ProductArrayList;  //List items Array
+    private ProductsActivity.MyAppAdapter myProductAdapter; //Array Adapter
+    private ListView ProductListView; // ListView
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
-    private static final String TAG = SingleTableActivity.class.getName();
-    public String TableName;
+    private static final String TAG = ProductsActivity.class.getName();
+    public String ProductName;
     public int id;
-    TextView tableNameTextView;
+    TextView ProductNameTextView;
+    public int catId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_table);
+        setContentView(R.layout.activity_products);
 
         ArrayList<String> items = new ArrayList<>();
-        PCArrayList = new ArrayList<>(); // ArrayList Initialization
-        PCListView = findViewById(R.id.ProductListView);
+        ProductArrayList = new ArrayList<>(); // ArrayList Initialization
+        ProductListView = findViewById(R.id.productListView);
         connectionClass = new ConnectionClass(); // Connection Class Initialization
 
         //getting table TableName and id
@@ -55,19 +58,22 @@ public class SingleTableActivity extends AppCompatActivity {
 
         if (bundle != null) {
             id = bundle.getInt("TableId");
-            TableName = bundle.getString("TableName");
+            ProductName = bundle.getString("TableName");
+            catId = bundle.getInt("catId");
         } else {
             id = 0;
-            TableName = null;
+            ProductName = null;
+            catId = 0;
         }
         Log.e(TAG+" TableId: ", id + "");
-        Log.e(TAG+" TableName: ", TableName + "");
+        Log.e(TAG+" TableName: ", ProductName + "");
+        Log.e(TAG+" catId: ", catId + "");
 
-        tableNameTextView = findViewById(R.id.TableHeader);
-        tableNameTextView.setText(TableName);
+        ProductNameTextView = findViewById(R.id.TableHead);
+        ProductNameTextView.setText(ProductName);
 
         // Calling Async Task
-        SingleTableActivity.SyncData orderData = new SingleTableActivity.SyncData();
+        ProductsActivity.SyncData orderData = new ProductsActivity.SyncData();
         orderData.execute("");
     }
 
@@ -80,7 +86,7 @@ public class SingleTableActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() //Starts the progress dialog
         {
-            progress = ProgressDialog.show(SingleTableActivity.this, "Synchronising",
+            progress = ProgressDialog.show(ProductsActivity.this, "Synchronising",
                     "ListView Loading! Please Wait...", true);
         }
 
@@ -97,9 +103,26 @@ public class SingleTableActivity extends AppCompatActivity {
                 else {
                     Log.e("CONNECTED", "Ready for query");
                     // Change below query according to your own database
-                    String query = "select des, id name FROM Product_Category";
+                    String Sql_str;
+                    String WHCODE = "1000";
+                    String extra = "{PRODUCTYPE_EXTRA_EPILOGES}";
+                    Sql_str = "Select Products.id,des,bonus_active,bonus_quantity,bonus_type,";
+                    Sql_str += "category_id,discount_active,discount_precent,disc_gen_active,disc_gen_precent,";
+                    Sql_str += "isCompl,Products.guid,";
+                    Sql_str += "isnull(price_format,'N2') as price_format,type_paragwghs,shopType,";
+                    Sql_str += "category_des,";
+                    Sql_str += "Products_WH.price1 as price,";
+                    Sql_str += "isnull(Products_WH.order_enb,0) as order_enb,isnull(Products_WH.order_printer,'DISABLE') as order_printer,";
+                    Sql_str += "isnull(price2,0) as price2,product_type";
+                    Sql_str += " from Products";
+                    Sql_str += " LEFT JOIN Products_WH on Products.guid=Products_WH.prguid";
+                    //Sql_str += " where product_type!=1 And product_type!=3 And product_type!=4 And type_paragwghs!=" + extra; //na mhn einai kai xtra choise proion
+                    //todo aporia gia Sergio!
+                    Sql_str += " where Products_WH.WHCODE=" + WHCODE;
+                    Sql_str += "and  Products.category_id="+ catId;
+                    Sql_str += " order by Products.priority,Products.des";
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
+                    ResultSet rs = stmt.executeQuery(Sql_str);
                     if (rs != null) // if resultset not null, I add items to itemArrayList using class created
                     {
                         Log.e("Status: ", "rs not null");
@@ -108,7 +131,8 @@ public class SingleTableActivity extends AppCompatActivity {
                             try {
                                 //Log.e("category_des: ", rs.getString("category_des"));
                                 Log.e("des: ", rs.getString("des"));
-                                PCArrayList.add(new ProductCategory(rs.getString("des")));
+                                Log.e("price:", String.valueOf(rs.getDouble("price")));
+                                ProductArrayList.add(new Product(rs.getString("des"),rs.getDouble("price")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Error: ", ex.toString());
@@ -137,7 +161,7 @@ public class SingleTableActivity extends AppCompatActivity {
         protected void onPostExecute(String msg) // dismissing progress dialog, showing error and setting up my listView
         {
             progress.dismiss();
-            Toast.makeText(SingleTableActivity.this, msg + "", Toast.LENGTH_LONG).show();
+            Toast.makeText(ProductsActivity.this, msg + "", Toast.LENGTH_LONG).show();
             Log.e("success", "is true");
             if (!success)
             {
@@ -145,9 +169,9 @@ public class SingleTableActivity extends AppCompatActivity {
             }
             else {
                 try {
-                    myProductCategoryAdapter = new MyAppAdapter(PCArrayList, SingleTableActivity.this);
-                    PCListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    PCListView.setAdapter(myProductCategoryAdapter);
+                    myProductAdapter = new MyAppAdapter(ProductArrayList, ProductsActivity.this);
+                    ProductListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    ProductListView.setAdapter(myProductAdapter);
                     Log.e(TAG + " adapter: ", "OK");
                 } catch (Exception ex)
                 {
@@ -155,25 +179,21 @@ public class SingleTableActivity extends AppCompatActivity {
                     Log.e(TAG + " error: ", ex.toString());
                 }
 
-                PCListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                ProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                 {
                     @Override
                     public void onItemClick(AdapterView<?> adapter, View v, int position,
                                             long arg3)
                     {
-                        ProductCategory productCategory = PCArrayList.get(position);
-                        String name  = productCategory.getCategoryName();
+                        Product product = ProductArrayList.get(position);
+                        String name  = product.getCategoryName();
                         Log.e(TAG + " Category name: ", name);
                         Log.e(TAG + " item clicked", position+"");
-                        int id = position + 1;
-                        Log.e(TAG + " Category id: ", id+"");
-                        productCategory.setId(id);
 
-                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
-                        toProducts.putExtra("catName", name);
-                        toProducts.putExtra("catId", id);
-                        toProducts.putExtra("TableName",TableName);
-                        startActivity(toProducts);
+//                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
+//                        toProducts.putExtra("catName", name);
+//                        toProducts.putExtra("catId", id);
+//                        startActivity(toProducts);
                     }
                 });
             }
@@ -188,12 +208,12 @@ public class SingleTableActivity extends AppCompatActivity {
             TextView TableId;
         }
 
-        public List<ProductCategory> productCategoryList;
+        public List<Product> productCategoryList;
 
         public Context context;
-        ArrayList<ProductCategory> arrayList;
+        ArrayList<Product> arrayList;
 
-        private MyAppAdapter(List<ProductCategory> apps, Context context)
+        private MyAppAdapter(List<Product> apps, Context context)
         {
             this.productCategoryList = apps;
             this.context = context;
@@ -237,12 +257,6 @@ public class SingleTableActivity extends AppCompatActivity {
             // here setting up names and images
             viewHolder.textName.setText(productCategoryList.get(position).getCategoryName()+"");
             //viewHolder.TableId.setText(TableName);
-
-            if (position % 2 == 1) {
-                rowView.setBackgroundColor(Color.BLUE);
-            } else {
-                rowView.setBackgroundColor(Color.WHITE);
-            }
 
             Log.e(TAG + " Category ListView: ", "OK");
             return rowView;

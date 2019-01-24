@@ -1,22 +1,23 @@
 package com.steam.app.pdaOrder.Model;
 
-public class ProductCategory {
+public class Product {
 
     private int id;
     private int catId;
-    private String categoryName;
+    private String productName;
+    private double price;
 
-    public ProductCategory(String categoryName)
+    public Product(String categoryName, double price)
     {
-        this.categoryName = categoryName;
+        this.productName = categoryName;
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return productName;
     }
 
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.productName = categoryName;
     }
 
     public int getId() {
@@ -27,7 +28,12 @@ public class ProductCategory {
         this.id = id;
     }
 
+    public void getProductprice(double price) {
+        this.price = price;
+    }
+
     public int getProductCategoryId() {
         return catId;
     }
 }
+

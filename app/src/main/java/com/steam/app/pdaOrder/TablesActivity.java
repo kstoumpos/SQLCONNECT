@@ -94,7 +94,7 @@ public class TablesActivity extends AppCompatActivity {
                     String Sql_str;
                     Sql_str = "Select id,name,capacity,isnull(tbl_setTable.state,0) as state,isnull(cur_people,0) as cur_people,dateOpened";
                     Sql_str += " From tbl_setTable ";
-                    Sql_str += "Where shoptype=" + 1 + " and catid =" + 1; //to posto pou epilex8ike CatId
+                    Sql_str += "Where shoptype=" + ShpType + " and catid =" + 1; //to posto pou epilex8ike CatId
                     Sql_str += " Order by tbl_setTable.vispriority;";
 
 //
