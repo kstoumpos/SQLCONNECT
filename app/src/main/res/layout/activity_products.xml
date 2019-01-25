@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -42,6 +43,24 @@
             android:layout_below="@+id/productListView">
         </ListView>
 
+        <TextView
+            android:id="@+id/OrderTotal"
+            android:text="Order Total"
+            android:layout_below="@+id/confProductListView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/sendOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confProductListView"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/OrderTotal"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/checkbox_on_background" />
+
     </RelativeLayout>
+
 
 </android.support.constraint.ConstraintLayout>

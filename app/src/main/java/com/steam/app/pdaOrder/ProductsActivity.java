@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,6 @@ public class ProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        ArrayList<String> items = new ArrayList<>();
         ProductArrayList = new ArrayList<>(); // ArrayList Initialization
         ProductExtraArrayList = new ArrayList<>();
         ProductListView = findViewById(R.id.productListView);
@@ -195,8 +196,11 @@ public class ProductsActivity extends AppCompatActivity {
                     {
                         Product product = ProductArrayList.get(position);
                         String name  = product.getCategoryName();
-                        Log.e(TAG + " Category name: ", name);
+                        Log.e(TAG + " Product name: ", name);
                         Log.e(TAG + " item clicked", position+"");
+
+                        double price = product.getPrice();
+                        Log.e(TAG + " Product price: ", String.valueOf(price));
 
 //                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
 //                        toProducts.putExtra("catName", name);
@@ -334,8 +338,10 @@ public class ProductsActivity extends AppCompatActivity {
                     {
                         Product product = ProductExtraArrayList.get(position);
                         String name  = product.getCategoryName();
-                        Log.e(TAG + " Category name: ", name);
+                        Log.e(TAG + " Product name: ", name);
                         Log.e(TAG + " item clicked", position+"");
+                        double price = product.getPrice();
+                        Log.e(TAG + " Product price: ", String.valueOf(price));
 
 //                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
 //                        toProducts.putExtra("catName", name);
@@ -352,8 +358,10 @@ public class ProductsActivity extends AppCompatActivity {
         public class ViewHolder
         {
             TextView textName;
-            TextView TableId;
+            TextView priceTextView;
+            ImageButton addTocart;
         }
+
 
         public List<Product> productCategoryList;
 
@@ -392,9 +400,11 @@ public class ProductsActivity extends AppCompatActivity {
             if (rowView == null)
             {
                 LayoutInflater inflater = getLayoutInflater();
-                rowView = inflater.inflate(R.layout.product_category_content, parent, false);
+                rowView = inflater.inflate(R.layout.product_content, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.textName = rowView.findViewById(R.id.ProductCategoryTitle);
+                viewHolder.priceTextView = rowView.findViewById(R.id.price);
+                viewHolder.addTocart = rowView.findViewById(R.id.addToCart);
                 rowView.setTag(viewHolder);
             }
             else
@@ -403,9 +413,16 @@ public class ProductsActivity extends AppCompatActivity {
             }
             // here setting up names and images
             viewHolder.textName.setText(productCategoryList.get(position).getCategoryName()+"");
-            //viewHolder.TableId.setText(TableName);
+            viewHolder.priceTextView.setText(productCategoryList.get(position).getPrice()+"");
 
-            Log.e(TAG + " Category ListView: ", "OK");
+            viewHolder.addTocart.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                    Log.e("added product", productCategoryList.get(position).getCategoryName()+" "+productCategoryList.get(position).getPrice()+"");
+                }
+            });
+            Log.e(TAG + " Products ListView: ", "OK");
+
             return rowView;
         }
     }

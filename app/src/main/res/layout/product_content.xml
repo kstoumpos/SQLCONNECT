@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:minHeight="15dp"
         android:id="@+id/relativeLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="15dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +19,21 @@
             android:id="@+id/ProductCategoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/addToCart"
+            android:layout_centerHorizontal="true" />
+
+        <ImageButton
+            android:id="@+id/addToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_add_shopping_cart" />
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
