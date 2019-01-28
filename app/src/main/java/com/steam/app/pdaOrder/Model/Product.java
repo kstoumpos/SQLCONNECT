@@ -1,6 +1,9 @@
 package com.steam.app.pdaOrder.Model;
 
-public class Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Product implements Parcelable {
 
     private int id;
     private int catId;
@@ -15,10 +18,16 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String categoryName, double price)
-    {
+    public Product(String categoryName, double price, int id) {
         this.productName = categoryName;
         this.price = price;
+        this.id = id;
+    }
+
+    protected Product(Parcel in) {
+        productName = in.readString();
+        price = in.readDouble();
+        id = in.readInt();
     }
 
     public String getCategoryName() {
@@ -40,5 +49,29 @@ public class Product {
     public int getProductCategoryId() {
         return catId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(productName);
+        parcel.writeDouble(price);
+        parcel.writeInt(id);
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int i) {
+            return new Product[0];
+        }
+    };
 }
 

@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.steam.app.pdaOrder.Model.Order;
 import com.steam.app.pdaOrder.Model.Product;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -45,6 +44,9 @@ public class ProductsActivity extends AppCompatActivity {
     TextView ProductNameTextView;
     public int catId;
     String Sqlstr;
+    ImageButton toCart;
+    Order myOrder;
+    private ArrayList<Product> productsToCart;
 
 
     @Override
@@ -54,9 +56,11 @@ public class ProductsActivity extends AppCompatActivity {
 
         ProductArrayList = new ArrayList<>(); // ArrayList Initialization
         ProductExtraArrayList = new ArrayList<>();
+        productsToCart = new ArrayList<Product>();
         ProductListView = findViewById(R.id.productListView);
         ProductExtraListView = findViewById(R.id.confProductListView);
         connectionClass = new ConnectionClass(); // Connection Class Initialization
+        toCart = findViewById(R.id.toCart);
 
         //getting table TableName and id
         Intent toTable = getIntent();
@@ -84,6 +88,21 @@ public class ProductsActivity extends AppCompatActivity {
 
         ProductsActivity.SyncExtraData orderExtraData = new ProductsActivity.SyncExtraData();
         orderExtraData.execute("");
+
+        toCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductsActivity.this, "test", Toast.LENGTH_SHORT).show();
+                Log.e(TAG+" TableId: ", id + "");
+                Log.e(TAG+" TableName: ", ProductName + "");
+                Log.e(TAG+" catId: ", catId + "");
+
+                Intent toCart = new Intent(ProductsActivity.this, CartActivity.class);
+                toCart.putExtra("cartList", productsToCart); //Optional parameters
+                ProductsActivity.this.startActivity(toCart);
+            }
+        });
+
     }
 
     // Async Task has three override methods,
@@ -141,7 +160,7 @@ public class ProductsActivity extends AppCompatActivity {
                                 //Log.e("category_des: ", rs.getString("category_des"));
                                 Log.e("des: ", rs.getString("des"));
                                 Log.e("price:", String.valueOf(rs.getDouble("price")));
-                                ProductArrayList.add(new Product(rs.getString("des"),rs.getDouble("price")));
+                                ProductArrayList.add(new Product(rs.getString("des"),rs.getDouble("price"), rs.getInt("id")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Error: ", ex.toString());
@@ -201,11 +220,6 @@ public class ProductsActivity extends AppCompatActivity {
 
                         double price = product.getPrice();
                         Log.e(TAG + " Product price: ", String.valueOf(price));
-
-//                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
-//                        toProducts.putExtra("catName", name);
-//                        toProducts.putExtra("catId", id);
-//                        startActivity(toProducts);
                     }
                 });
             }
@@ -283,7 +297,7 @@ public class ProductsActivity extends AppCompatActivity {
                                 //Log.e("category_des: ", rs.getString("category_des"));
                                 Log.e("des: ", rs.getString("des"));
                                 Log.e("price:", String.valueOf(rs.getDouble("price")));
-                                ProductExtraArrayList.add(new Product(rs.getString("des"),rs.getDouble("price")));
+                                ProductExtraArrayList.add(new Product(rs.getString("des"),rs.getDouble("price"),rs.getInt("id")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Error: ", ex.toString());
@@ -359,12 +373,10 @@ public class ProductsActivity extends AppCompatActivity {
         {
             TextView textName;
             TextView priceTextView;
-            ImageButton addTocart;
+            ImageButton addToCart;
         }
 
-
         public List<Product> productCategoryList;
-
         public Context context;
         ArrayList<Product> arrayList;
 
@@ -394,7 +406,6 @@ public class ProductsActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) // inflating the layout and initializing widgets
         {
-
             View rowView = convertView;
             ViewHolder viewHolder= null;
             if (rowView == null)
@@ -404,7 +415,7 @@ public class ProductsActivity extends AppCompatActivity {
                 viewHolder = new ViewHolder();
                 viewHolder.textName = rowView.findViewById(R.id.ProductCategoryTitle);
                 viewHolder.priceTextView = rowView.findViewById(R.id.price);
-                viewHolder.addTocart = rowView.findViewById(R.id.addToCart);
+                viewHolder.addToCart = rowView.findViewById(R.id.addToCart);
                 rowView.setTag(viewHolder);
             }
             else
@@ -415,10 +426,12 @@ public class ProductsActivity extends AppCompatActivity {
             viewHolder.textName.setText(productCategoryList.get(position).getCategoryName()+"");
             viewHolder.priceTextView.setText(productCategoryList.get(position).getPrice()+"");
 
-            viewHolder.addTocart.setOnClickListener(new View.OnClickListener() {
+            viewHolder.addToCart.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Perform action on click
-                    Log.e("added product", productCategoryList.get(position).getCategoryName()+" "+productCategoryList.get(position).getPrice()+"");
+                    Log.e(TAG + " added product", productCategoryList.get(position).getCategoryName()+" "+ productCategoryList.get(position).getPrice()+"  id:"+ productCategoryList.get(position).getId());
+                    productsToCart.add(new Product(productCategoryList.get(position).getCategoryName(),productCategoryList.get(position).getPrice(), productCategoryList.get(position).getId()));
+                    Log.e(TAG, "Product " + productCategoryList.get(position).getCategoryName()+ " added to cart");
                 }
             });
             Log.e(TAG + " Products ListView: ", "OK");
