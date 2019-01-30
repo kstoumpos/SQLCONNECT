@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class SingleTableActivity extends AppCompatActivity {
 
     private ArrayList<ProductCategory> PCArrayList;  //List items Array
     private SingleTableActivity.MyAppAdapter myProductCategoryAdapter; //Array Adapter
-    private ListView PCListView; // ListView
+    private GridView PCListView; // ListView
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
     private static final String TAG = SingleTableActivity.class.getName();

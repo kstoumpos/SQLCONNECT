@@ -28,7 +28,7 @@
             android:layout_alignRight="@+id/TableHead"
             android:textSize="20sp" />
 
-        <ListView
+        <GridView
             android:id="@+id/productListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,12 +36,12 @@
             android:layout_centerHorizontal="true"
             android:choiceMode="multipleChoice" />
 
-        <ListView
+        <GridView
             android:id="@+id/confProductListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/productListView">
-        </ListView>
+        </GridView>
 
         <TextView
             android:id="@+id/OrderTotal"

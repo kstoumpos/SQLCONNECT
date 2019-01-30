@@ -30,7 +30,7 @@
             android:layout_alignRight="@+id/TableHeader"
             android:textSize="20sp" />
 
-        <ListView
+        <GridView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"

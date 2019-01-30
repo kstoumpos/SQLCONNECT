@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class TablesActivity extends AppCompatActivity {
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
     private ArrayList<TableItem> tableItemArrayList;  //List items Array
-    private ListView tablesList;
+    private GridView tablesList;
     private MyTableAdapter myTableAdapter; //Array Adapter
     int ShpType = 1;
 

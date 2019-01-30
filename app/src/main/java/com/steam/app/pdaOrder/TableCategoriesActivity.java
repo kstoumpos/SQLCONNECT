@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
 
     private ArrayList<TableCategoryItem> itemArrayList;  //List items Array
     private MyAppAdapter myCategoryAdapter; //Array Adapter
-    private ListView listView; // ListView
+    private GridView listView; // ListView
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
 
@@ -121,7 +122,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
             else {
                 try {
                     myCategoryAdapter = new MyAppAdapter(itemArrayList, TableCategoriesActivity.this);
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    listView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 
                     listView.setAdapter(myCategoryAdapter);
 

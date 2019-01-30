@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,8 +35,8 @@ public class ProductsActivity extends AppCompatActivity {
     private ArrayList<Product> ProductArrayList;  //List items Array
     private ArrayList<Product> ProductExtraArrayList;
     private ProductsActivity.MyAppAdapter myProductAdapter; //Array Adapter
-    private ListView ProductListView; // ListView
-    private ListView ProductExtraListView;
+    private GridView ProductListView; // ListView
+    private GridView ProductExtraListView;
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
     private static final String TAG = ProductsActivity.class.getName();

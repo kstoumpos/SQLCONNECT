@@ -11,13 +11,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/textCatId"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/textCatId"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
+            android:visibility="invisible" />
 
     <TextView
         android:layout_width="wrap_content"
