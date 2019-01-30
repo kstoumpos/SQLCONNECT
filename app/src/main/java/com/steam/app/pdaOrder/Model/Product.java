@@ -9,6 +9,7 @@ public class Product implements Parcelable {
     private int catId;
     private String productName;
     private double price;
+    private boolean selected;
 
     public double getPrice() {
         return price;

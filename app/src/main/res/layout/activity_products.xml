@@ -52,12 +52,12 @@
 
         <ImageButton
             android:id="@+id/toCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/confProductListView"
-            android:layout_marginTop="0dp"
-            android:layout_toRightOf="@+id/OrderTotal"
-            android:layout_alignParentRight="true"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="8dp"
             android:src="@android:drawable/checkbox_on_background" />
 
     </RelativeLayout>

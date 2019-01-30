@@ -429,10 +429,12 @@ public class ProductsActivity extends AppCompatActivity {
             viewHolder.addToCart.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Perform action on click
-                    Log.e(TAG + " added product", productCategoryList.get(position).getCategoryName()+" "+ productCategoryList.get(position).getPrice()+"  id:"+ productCategoryList.get(position).getId());
-                    productsToCart.add(new Product(productCategoryList.get(position).getCategoryName(),productCategoryList.get(position).getPrice(), productCategoryList.get(position).getId()));
-                    Log.e(TAG, "Product " + productCategoryList.get(position).getCategoryName()+ " added to cart");
-                }
+                    Product product = new Product(productCategoryList.get(position).getCategoryName(),productCategoryList.get(position).getPrice(), productCategoryList.get(position).getId());
+                        //add it
+                        Log.e(TAG + " added product", productCategoryList.get(position).getCategoryName()+" "+ productCategoryList.get(position).getPrice()+"  id:"+ productCategoryList.get(position).getId());
+                        productsToCart.add(product);
+                        Log.e(TAG, "Product " + productCategoryList.get(position).getCategoryName()+ " added to cart");
+                    }
             });
             Log.e(TAG + " Products ListView: ", "OK");
 

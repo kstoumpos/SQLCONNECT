@@ -13,4 +13,10 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:divider="#f55" />
+
+    <ImageButton
+        android:id="@+id/sendOrder"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_refresh" />
 </LinearLayout>

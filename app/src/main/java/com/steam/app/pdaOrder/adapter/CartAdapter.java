@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.R;
 
@@ -21,9 +23,8 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
     // View lookup cache
     private static class ViewHolder {
         TextView txtName;
-        TextView txtType;
-        TextView txtVersion;
-        ImageView info;
+        TextView txtPrice;
+        ImageButton remove;
     }
 
     public CartAdapter(ArrayList<Product> data, Context context) {
@@ -38,23 +39,20 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
         int position =(Integer) v.getTag();
         Product product = getItem(position);
 
-//        switch (v.getId())
-//        {
-//            case R.id.list_row:
-//                Snackbar.make(v, "ID: " +dataModel.getId(), Snackbar.LENGTH_LONG)
-//                        .setAction("No action", null).show();
-//                break;
-//        }
     }
 
     private int lastPosition = -1;
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+
         // Get the data item for this position
         Product product = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
+        ImageButton remove;
+
+
 
         final View result;
 
@@ -64,9 +62,22 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_row, parent, false);
             viewHolder.txtName = convertView.findViewById(R.id.from_name);
-//            viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
-//            viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
-//            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+            viewHolder.txtPrice = convertView.findViewById(R.id.plist_price_text);
+            viewHolder.remove = convertView.findViewById(R.id.chk_selectitem);
+
+            viewHolder.remove.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Log.e("remove ", "clicked");
+
+                        dataSet.remove(getItem(position));
+                        //dataSet.notifyAll();
+                        int listSize = dataSet.size();
+                    for (int i = 0; i<listSize; i++){
+                        Log.i("Product in cart: ", dataSet.get(i).getCategoryName());
+                    }
+                }
+            });
+
 
             result = convertView;
 
@@ -80,10 +91,11 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
 
         try {
         viewHolder.txtName.setText(product.getCategoryName());
+        viewHolder.txtPrice.setText(product.getPrice()+"");
         } catch (Exception e) {
-
             Log.e("your app", e.toString());
         }
+
 //        viewHolder.txtType.setText(dataModel.getType());
 //        viewHolder.txtVersion.setText(dataModel.getVersion_number());
 //        viewHolder.info.setOnClickListener(this);
