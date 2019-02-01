@@ -34,7 +34,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     private ArrayList<Product> ProductArrayList;  //List items Array
     private ArrayList<Product> ProductExtraArrayList;
-    private ProductsActivity.MyAppAdapter myProductAdapter; //Array Adapter
+    private ProductsActivity.MyAppAdapter myProductAdapter; //Array DbAdapter
     private GridView ProductListView; // ListView
     private GridView ProductExtraListView;
     private boolean success = false; // boolean
@@ -84,11 +84,11 @@ public class ProductsActivity extends AppCompatActivity {
         ProductNameTextView.setText(ProductName);
 
         // Calling Async Task
-        ProductsActivity.SyncData orderData = new ProductsActivity.SyncData();
-        orderData.execute("");
-
-        ProductsActivity.SyncExtraData orderExtraData = new ProductsActivity.SyncExtraData();
-        orderExtraData.execute("");
+//        ProductsActivity.SyncData orderData = new ProductsActivity.SyncData();
+//        orderData.execute("");
+//
+//        ProductsActivity.SyncExtraData orderExtraData = new ProductsActivity.SyncExtraData();
+//        orderExtraData.execute("");
 
         toCart.setOnClickListener(new View.OnClickListener() {
             @Override

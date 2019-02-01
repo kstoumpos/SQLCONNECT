@@ -1,6 +1,7 @@
 package com.steam.app.pdaOrder;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,20 +25,19 @@ public class MainActivity extends AppCompatActivity
     ProgressBar pbbar;
     Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         connectionClass = new ConnectionClass();
-        edtuserid = (EditText) findViewById(R.id.et_username);
-        edtpass = (EditText) findViewById(R.id.et_password);
-        btnlogin = (Button) findViewById(R.id.btn_Login);
-        pbbar = (ProgressBar) findViewById(R.id.pbbar);
+        edtuserid = findViewById(R.id.et_username);
+        edtpass = findViewById(R.id.et_password);
+        btnlogin = findViewById(R.id.btn_Login);
+        pbbar = findViewById(R.id.pbbar);
         pbbar.setVisibility(View.GONE);
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
@@ -45,10 +45,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 DoLogin  doLogin = new DoLogin();
                 doLogin.execute("");
-
             }
         });
-
     }
 
     @Override

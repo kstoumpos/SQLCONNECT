@@ -1,6 +1,9 @@
 package com.steam.app.pdaOrder.Model;
 
-public class TableCategoryItem {
+import android.os.Parcel;
+import java.io.Serializable;
+
+public class TableCategoryItem implements Serializable {
 
 
         public int catId; //id
@@ -12,11 +15,16 @@ public class TableCategoryItem {
             this.name = name;
         }
 
-        public int getId() {
+    protected TableCategoryItem(Parcel in) {
+        catId = in.readInt();
+        name = in.readString();
+    }
+
+    public int getId() {
             return catId;
         }
 
         public String getName() {
             return name;
         }
-    }
+}

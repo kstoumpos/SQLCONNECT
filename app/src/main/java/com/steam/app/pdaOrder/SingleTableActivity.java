@@ -30,7 +30,7 @@ import java.util.List;
 public class SingleTableActivity extends AppCompatActivity {
 
     private ArrayList<ProductCategory> PCArrayList;  //List items Array
-    private SingleTableActivity.MyAppAdapter myProductCategoryAdapter; //Array Adapter
+    private SingleTableActivity.MyAppAdapter myProductCategoryAdapter; //Array DbAdapter
     private GridView PCListView; // ListView
     private boolean success = false; // boolean
     private ConnectionClass connectionClass; //Connection Class Variable
@@ -67,9 +67,9 @@ public class SingleTableActivity extends AppCompatActivity {
         tableNameTextView = findViewById(R.id.TableHeader);
         tableNameTextView.setText(TableName);
 
-        // Calling Async Task
-        SingleTableActivity.SyncData orderData = new SingleTableActivity.SyncData();
-        orderData.execute("");
+//        // Calling Async Task
+//        SingleTableActivity.SyncData orderData = new SingleTableActivity.SyncData();
+//        orderData.execute("");
     }
 
     // Async Task has three override methods,

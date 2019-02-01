@@ -16,6 +16,10 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.steam.app.pdaOrder.Model.Product;
+import com.steam.app.pdaOrder.Model.ProductCategory;
+import com.steam.app.pdaOrder.Model.TableCategoryItem;
 import com.steam.app.pdaOrder.Model.TableItem;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,13 +39,17 @@ public class TablesActivity extends AppCompatActivity {
     private ConnectionClass connectionClass; //Connection Class Variable
     private ArrayList<TableItem> tableItemArrayList;  //List items Array
     private GridView tablesList;
-    private MyTableAdapter myTableAdapter; //Array Adapter
+    private MyTableAdapter myTableAdapter; //Array DbAdapter
     int ShpType = 1;
+    private static final String TAG = TablesActivity.class.getName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
+
+        Log.e(TAG, "started");
 
         TextView catNameText = findViewById(R.id.catName);
         TextView catIdText = findViewById(R.id.catId);
@@ -55,11 +63,29 @@ public class TablesActivity extends AppCompatActivity {
         Log.e("CatId: ", CatId+"");
         String catName = i.getStringExtra("catName");
         Log.e("catName: ", catName+"");
+        ArrayList<TableCategoryItem> itemArrayList = (ArrayList<TableCategoryItem>) i.getSerializableExtra("TableCategoryArrayList");
+        ArrayList<ProductCategory> PCArrayList = (ArrayList<ProductCategory>) i.getSerializableExtra("PCArrayList");
+        ArrayList<Product> ProductArrayList = (ArrayList<Product>) i.getSerializableExtra("ProductArrayList");
+
+        int listSize = itemArrayList.size();
+        for (int j = 0; j<listSize; j++){
+            Log.i(TAG+" itemArrayList name: ", itemArrayList.get(j).getName());
+        }
+
+        int listSize2 = PCArrayList.size();
+        for (int j = 0; j<listSize2; j++){
+            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
+        }
+
+        int listSize3 = ProductArrayList.size();
+        for (int j = 0; j<listSize3; j++){
+            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
+        }
 
         catNameText.setText(catName);
         catIdText.setText(catId);
 
-        // Calling Async Task
+//        // Calling Async Task
         TablesActivity.SyncData orderData = new TablesActivity.SyncData();
         orderData.execute("");
     }
@@ -215,6 +241,7 @@ public class TablesActivity extends AppCompatActivity {
                         Intent toTable = new Intent(TablesActivity.this, SingleTableActivity.class);
                         toTable.putExtra("TableName", name);
                         toTable.putExtra("TableId", id);
+                        //itemArrayList, PCArrayList, ProductArrayList
                         startActivity(toTable);
                     }
                 });
@@ -239,7 +266,7 @@ public class TablesActivity extends AppCompatActivity {
         {
             this.tableList = apps;
             this.context = context;
-            arrayTableList = new ArrayList<TableItem>();
+            arrayTableList = new ArrayList<>();
             arrayTableList.addAll(tableList);
         }
 

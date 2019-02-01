@@ -1,6 +1,8 @@
 package com.steam.app.pdaOrder.Model;
 
-public class ProductCategory {
+import java.io.Serializable;
+
+public class ProductCategory implements Serializable {
 
     private int id;
     private int catId;
@@ -30,4 +32,5 @@ public class ProductCategory {
     public int getProductCategoryId() {
         return catId;
     }
+
 }
