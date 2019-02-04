@@ -17,7 +17,11 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
+import com.steam.app.pdaOrder.Model.TableCategoryItem;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -38,7 +42,8 @@ public class SingleTableActivity extends AppCompatActivity {
     public String TableName;
     public int id;
     TextView tableNameTextView;
-
+    public ArrayList<TableCategoryItem> itemArrayList;
+    public ArrayList<Product> ProductArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,25 @@ public class SingleTableActivity extends AppCompatActivity {
         Log.e(TAG+" TableId: ", id + "");
         Log.e(TAG+" TableName: ", TableName + "");
 
+        itemArrayList = (ArrayList<TableCategoryItem>) toTable.getSerializableExtra("TableCategoryArrayList");
+        PCArrayList = (ArrayList<ProductCategory>) toTable.getSerializableExtra("PCArrayList");
+        ProductArrayList = (ArrayList<Product>) toTable.getSerializableExtra("ProductArrayList");
+
+        int listSize = itemArrayList.size();
+        for (int j = 0; j<listSize; j++){
+            Log.i(TAG+" itemArrayList name: ", itemArrayList.get(j).getName());
+        }
+
+        int listSize2 = PCArrayList.size();
+        for (int j = 0; j<listSize2; j++){
+            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
+        }
+
+        int listSize3 = ProductArrayList.size();
+        for (int j = 0; j<listSize3; j++){
+            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
+        }
+
         tableNameTextView = findViewById(R.id.TableHeader);
         tableNameTextView.setText(TableName);
 
@@ -72,114 +96,114 @@ public class SingleTableActivity extends AppCompatActivity {
 //        orderData.execute("");
     }
 
-    // Async Task has three override methods,
-    private class SyncData extends AsyncTask<String, String, String>
-    {
-        String msg = "Internet/DB_Credentials/Windows_FireWall_TurnOn Error, See Android Monitor in the bottom For details!";
-        ProgressDialog progress;
-
-        @Override
-        protected void onPreExecute() //Starts the progress dialog
-        {
-            progress = ProgressDialog.show(SingleTableActivity.this, "Synchronising",
-                    "ListView Loading! Please Wait...", true);
-        }
-
-        @Override
-        protected String doInBackground(String... strings)  // Connect to the database, write query and add items to array list
-        {
-            try
-            {
-                Connection conn = connectionClass.CONN(); //Connection Object
-                if (conn == null)
-                {
-                    success = false;
-                }
-                else {
-                    Log.e("CONNECTED", "Ready for query");
-                    // Change below query according to your own database
-                    String query = "select des, id name FROM Product_Category";
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-                    if (rs != null) // if resultset not null, I add items to itemArrayList using class created
-                    {
-                        Log.e("Status: ", "rs not null");
-                        while (rs.next())
-                        {
-                            try {
-                                //Log.e("category_des: ", rs.getString("category_des"));
-                                Log.e("des: ", rs.getString("des"));
-                                PCArrayList.add(new ProductCategory(rs.getString("des")));
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                Log.e("Error: ", ex.toString());
-                                Log.e("Status: ", "exception after query");
-                            }
-                        }
-                        msg = "Found";
-                        success = true;
-                    } else {
-                        msg = "No Data found!";
-                        success = false;
-                    }
-                }
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-                Writer writer = new StringWriter();
-                e.printStackTrace(new PrintWriter(writer));
-                msg = writer.toString();
-                success = false;
-            }
-            return msg;
-        }
-
-        @Override
-        protected void onPostExecute(String msg) // dismissing progress dialog, showing error and setting up my listView
-        {
-            progress.dismiss();
-            Toast.makeText(SingleTableActivity.this, msg + "", Toast.LENGTH_LONG).show();
-            Log.e("success", "is true");
-            if (!success)
-            {
-                Log.e("success", "is false");
-            }
-            else {
-                try {
-                    myProductCategoryAdapter = new MyAppAdapter(PCArrayList, SingleTableActivity.this);
-                    PCListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    PCListView.setAdapter(myProductCategoryAdapter);
-                    Log.e(TAG + " adapter: ", "OK");
-                } catch (Exception ex)
-                {
-                    Log.e(TAG + " adapter: ", "ERROR");
-                    Log.e(TAG + " error: ", ex.toString());
-                }
-
-                PCListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapter, View v, int position,
-                                            long arg3)
-                    {
-                        ProductCategory productCategory = PCArrayList.get(position);
-                        String name  = productCategory.getCategoryName();
-                        Log.e(TAG + " Category name: ", name);
-                        Log.e(TAG + " item clicked", position+"");
-                        int id = position + 1;
-                        Log.e(TAG + " Category id: ", id+"");
-                        productCategory.setId(id);
-
-                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
-                        toProducts.putExtra("catName", name);
-                        toProducts.putExtra("catId", id);
-                        toProducts.putExtra("TableName",TableName);
-                        startActivity(toProducts);
-                    }
-                });
-            }
-        }
-    }
+//    // Async Task has three override methods,
+//    private class SyncData extends AsyncTask<String, String, String>
+//    {
+//        String msg = "Internet/DB_Credentials/Windows_FireWall_TurnOn Error, See Android Monitor in the bottom For details!";
+//        ProgressDialog progress;
+//
+//        @Override
+//        protected void onPreExecute() //Starts the progress dialog
+//        {
+//            progress = ProgressDialog.show(SingleTableActivity.this, "Synchronising",
+//                    "ListView Loading! Please Wait...", true);
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... strings)  // Connect to the database, write query and add items to array list
+//        {
+//            try
+//            {
+//                Connection conn = connectionClass.CONN(); //Connection Object
+//                if (conn == null)
+//                {
+//                    success = false;
+//                }
+//                else {
+//                    Log.e("CONNECTED", "Ready for query");
+//                    // Change below query according to your own database
+//                    String query = "select des, id name FROM Product_Category";
+//                    Statement stmt = conn.createStatement();
+//                    ResultSet rs = stmt.executeQuery(query);
+//                    if (rs != null) // if resultset not null, I add items to itemArrayList using class created
+//                    {
+//                        Log.e("Status: ", "rs not null");
+//                        while (rs.next())
+//                        {
+//                            try {
+//                                //Log.e("category_des: ", rs.getString("category_des"));
+//                                Log.e("des: ", rs.getString("des"));
+//                                PCArrayList.add(new ProductCategory(rs.getString("des")));
+//                            } catch (Exception ex) {
+//                                ex.printStackTrace();
+//                                Log.e("Error: ", ex.toString());
+//                                Log.e("Status: ", "exception after query");
+//                            }
+//                        }
+//                        msg = "Found";
+//                        success = true;
+//                    } else {
+//                        msg = "No Data found!";
+//                        success = false;
+//                    }
+//                }
+//            } catch (Exception e)
+//            {
+//                e.printStackTrace();
+//                Writer writer = new StringWriter();
+//                e.printStackTrace(new PrintWriter(writer));
+//                msg = writer.toString();
+//                success = false;
+//            }
+//            return msg;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String msg) // dismissing progress dialog, showing error and setting up my listView
+//        {
+//            progress.dismiss();
+//            Toast.makeText(SingleTableActivity.this, msg + "", Toast.LENGTH_LONG).show();
+//            Log.e("success", "is true");
+//            if (!success)
+//            {
+//                Log.e("success", "is false");
+//            }
+//            else {
+//                try {
+//                    myProductCategoryAdapter = new MyAppAdapter(PCArrayList, SingleTableActivity.this);
+//                    PCListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//                    PCListView.setAdapter(myProductCategoryAdapter);
+//                    Log.e(TAG + " adapter: ", "OK");
+//                } catch (Exception ex)
+//                {
+//                    Log.e(TAG + " adapter: ", "ERROR");
+//                    Log.e(TAG + " error: ", ex.toString());
+//                }
+//
+//                PCListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapter, View v, int position,
+//                                            long arg3)
+//                    {
+//                        ProductCategory productCategory = PCArrayList.get(position);
+//                        String name  = productCategory.getCategoryName();
+//                        Log.e(TAG + " Category name: ", name);
+//                        Log.e(TAG + " item clicked", position+"");
+//                        int id = position + 1;
+//                        Log.e(TAG + " Category id: ", id+"");
+//                        productCategory.setId(id);
+//
+//                        Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
+//                        toProducts.putExtra("catName", name);
+//                        toProducts.putExtra("catId", id);
+//                        toProducts.putExtra("TableName",TableName);
+//                        startActivity(toProducts);
+//                    }
+//                });
+//            }
+//        }
+//    }
 
     public class MyAppAdapter extends BaseAdapter         //has a class viewHolder which holds
     {

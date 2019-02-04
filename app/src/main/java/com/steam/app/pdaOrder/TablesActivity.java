@@ -16,7 +16,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
@@ -42,7 +41,9 @@ public class TablesActivity extends AppCompatActivity {
     private MyTableAdapter myTableAdapter; //Array DbAdapter
     int ShpType = 1;
     private static final String TAG = TablesActivity.class.getName();
-
+    public ArrayList<TableCategoryItem> itemArrayList;
+    public ArrayList<ProductCategory> PCArrayList;
+    public ArrayList<Product> ProductArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,9 @@ public class TablesActivity extends AppCompatActivity {
         Log.e("CatId: ", CatId+"");
         String catName = i.getStringExtra("catName");
         Log.e("catName: ", catName+"");
-        ArrayList<TableCategoryItem> itemArrayList = (ArrayList<TableCategoryItem>) i.getSerializableExtra("TableCategoryArrayList");
-        ArrayList<ProductCategory> PCArrayList = (ArrayList<ProductCategory>) i.getSerializableExtra("PCArrayList");
-        ArrayList<Product> ProductArrayList = (ArrayList<Product>) i.getSerializableExtra("ProductArrayList");
+        itemArrayList = (ArrayList<TableCategoryItem>) i.getSerializableExtra("TableCategoryArrayList");
+        PCArrayList = (ArrayList<ProductCategory>) i.getSerializableExtra("PCArrayList");
+        ProductArrayList = (ArrayList<Product>) i.getSerializableExtra("ProductArrayList");
 
         int listSize = itemArrayList.size();
         for (int j = 0; j<listSize; j++){
@@ -203,10 +204,10 @@ public class TablesActivity extends AppCompatActivity {
         {
             progress.dismiss();
             Toast.makeText(TablesActivity.this, msg + "", Toast.LENGTH_LONG).show();
-            Log.e("success", "is true");
+            Log.i("success", "is true");
             if (!success)
             {
-                Log.e("success", "is false");
+                Log.i("success", "is false");
             }
             else {
                 try {
@@ -215,7 +216,7 @@ public class TablesActivity extends AppCompatActivity {
 
                     tablesList.setAdapter(myTableAdapter);
 
-                    Log.e("adapter: ", "OK");
+                    Log.i("adapter: ", "OK");
                 } catch (Exception ex)
                 {
                     Log.e("adapter: ", "ERROR");
@@ -230,18 +231,23 @@ public class TablesActivity extends AppCompatActivity {
                     {
                         TableItem tableItem = tableItemArrayList.get(position);
                         String name  = tableItem.getTableName();
-                        Log.e("table name: ", name);
+                        Log.i("table name: ", name);
                         int id = tableItem.getTableId();
-                        Log.e("table id: ", id+"");
-                        Log.e("item clicked", position+"");
+                        Log.i("table id: ", id+"");
+                        Log.i("item clicked", position+"");
 
                         Toast.makeText(TablesActivity.this, ""+name+" "+id+"",
                                 Toast.LENGTH_LONG).show();
 
                         Intent toTable = new Intent(TablesActivity.this, SingleTableActivity.class);
+
                         toTable.putExtra("TableName", name);
                         toTable.putExtra("TableId", id);
                         //itemArrayList, PCArrayList, ProductArrayList
+                        toTable.putExtra("TableCategoryArrayList", itemArrayList);
+                        toTable.putExtra("PCArrayList", PCArrayList);
+                        toTable.putExtra("ProductArrayList", ProductArrayList);
+
                         startActivity(toTable);
                     }
                 });
