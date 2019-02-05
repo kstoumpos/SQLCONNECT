@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.steam.app.pdaOrder.Model.Order;
 import com.steam.app.pdaOrder.Model.Product;
 import java.io.PrintWriter;
@@ -28,7 +27,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ProductsActivity extends AppCompatActivity {
 
