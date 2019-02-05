@@ -68,20 +68,20 @@ public class TablesActivity extends AppCompatActivity {
         PCArrayList = (ArrayList<ProductCategory>) i.getSerializableExtra("PCArrayList");
         ProductArrayList = (ArrayList<Product>) i.getSerializableExtra("ProductArrayList");
 
-        int listSize = itemArrayList.size();
-        for (int j = 0; j<listSize; j++){
-            Log.i(TAG+" itemArrayList name: ", itemArrayList.get(j).getName());
-        }
-
-        int listSize2 = PCArrayList.size();
-        for (int j = 0; j<listSize2; j++){
-            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
-        }
-
-        int listSize3 = ProductArrayList.size();
-        for (int j = 0; j<listSize3; j++){
-            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
-        }
+//        int listSize = itemArrayList.size();
+//        for (int j = 0; j<listSize; j++){
+//            Log.i(TAG+" itemArrayList name: ", itemArrayList.get(j).getName());
+//        }
+//
+//        int listSize2 = PCArrayList.size();
+//        for (int j = 0; j<listSize2; j++){
+//            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
+//        }
+//
+//        int listSize3 = ProductArrayList.size();
+//        for (int j = 0; j<listSize3; j++){
+//            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getProductName());
+//        }
 
         catNameText.setText(catName);
         catIdText.setText(catId);

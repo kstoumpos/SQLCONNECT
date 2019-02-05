@@ -16,11 +16,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -42,7 +40,6 @@ public class TableCategoriesActivity extends AppCompatActivity {
     public int catId;
     private static final String TAG = TableCategoriesActivity.class.getName();
     int ShpType = 1;
-    public int CatId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +166,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                     Sql_str += " LEFT JOIN Products_WH on Products.guid=Products_WH.prguid";
                     Sql_str += " Where Products.product_type<>1 And Products.product_type<>3 And Products.product_type<>4 And type_paragwghs<>" + extra; //na mhn einai kai xtra choise proion
                     Sql_str += " and Products_WH.WHCODE=" + WHCODE;
-                    Sql_str += " and Products.category_id="+ catId;
+//                    Sql_str += " and Products.category_id="+ catId;
                     Sql_str += " order by Products.priority,Products.des;";
                     Log.e("swl string", Sql_str);
                     ResultSet rs3 = stmt.executeQuery(Sql_str);
@@ -268,8 +265,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         }
 
                         int listSize3 = ProductArrayList.size();
-                        for (int j = 0; j<listSize3; j++){
-                            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
+                        for (int a = 0; a<listSize3; a++){
+                            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(a).getProductName());
                         }
 
                         startActivity(i);

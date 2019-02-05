@@ -29,7 +29,7 @@ public class Product implements Serializable {
         id = in.readInt();
     }
 
-    public String getCategoryName() {
+    public String getProductName() {
         return productName;
     }
 

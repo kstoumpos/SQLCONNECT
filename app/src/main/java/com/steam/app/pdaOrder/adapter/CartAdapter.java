@@ -73,7 +73,7 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
                         //dataSet.notifyAll();
                         int listSize = dataSet.size();
                     for (int i = 0; i<listSize; i++){
-                        Log.i("Product in cart: ", dataSet.get(i).getCategoryName());
+                        Log.i("Product in cart: ", dataSet.get(i).getProductName());
                     }
                 }
             });
@@ -90,7 +90,7 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
         lastPosition = position;
 
         try {
-        viewHolder.txtName.setText(product.getCategoryName());
+        viewHolder.txtName.setText(product.getProductName());
         viewHolder.txtPrice.setText(product.getPrice()+"");
         } catch (Exception e) {
             Log.e("your app", e.toString());

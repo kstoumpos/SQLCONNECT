@@ -30,7 +30,7 @@ public class CartActivity extends AppCompatActivity {
 
         int listSize = myList.size();
         for (int i = 0; i<listSize; i++){
-            Log.i("Product name: ", myList.get(i).getCategoryName());
+            Log.i("Product name: ", myList.get(i).getProductName());
         }
 
         adapter = new CartAdapter(myList,getApplicationContext());

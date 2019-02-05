@@ -68,7 +68,7 @@ public class SingleTableActivity extends AppCompatActivity {
 
         int listSize3 = ProductArrayList.size();
         for (int j = 0; j<listSize3; j++){
-            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
+            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getProductName());
         }
 
         tableNameTextView = findViewById(R.id.TableHeader);
