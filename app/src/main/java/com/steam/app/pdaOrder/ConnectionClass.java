@@ -25,7 +25,7 @@ public class ConnectionClass {
 
         try {
             Class.forName(classs);
-            ConnURL = "jdbc:jtds:sqlserver:/" + ip  + ":57169" + ";"
+            ConnURL = "jdbc:jtds:sqlserver://" + ip  + ":1433" + ";"
                     + "databaseName=" + db + ";user=" + un + ";password="
                     + password + ";";
             conn = DriverManager.getConnection(ConnURL);

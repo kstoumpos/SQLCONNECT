@@ -10,7 +10,7 @@
     <string name="dbName">Database Name</string>
     <string name="dbIP">Server IP</string>
     <string name="save">Save</string>
-    <string name="categories">Categories</string>
+    <string name="categories">Επιλογή Πόστου</string>
     <string name="productCat">Choose product</string>
     <string name="table_label">Table: </string>
 
