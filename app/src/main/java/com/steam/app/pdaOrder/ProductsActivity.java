@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.steam.app.pdaOrder.DB.DBAdapter;
 import com.steam.app.pdaOrder.Model.Order;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
@@ -22,8 +25,9 @@ import com.steam.app.pdaOrder.adapter.ProductAdapter;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ProductsActivity extends AppCompatActivity {
+public class ProductsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList<Product> ProductArrayList;  //List items Array
     private ArrayList<Product> ProductExtraArrayList;
@@ -42,8 +46,6 @@ public class ProductsActivity extends AppCompatActivity {
     ProductAdapter mAdapter;
     EditText search;
     ImageButton homeButton;
-    //DΒHelper db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +78,30 @@ public class ProductsActivity extends AppCompatActivity {
         Log.e(TAG+" TableName: ", ProductName + "");
         Log.e(TAG+" catId: ", catId + "");
 
+        DBAdapter mDbHelper = new DBAdapter(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        Cursor productData = mDbHelper.getTestData(catId);
+        if (productData.moveToFirst()){
+            do{
+                Product mProduct = new Product();
+                String name = productData.getString(productData.getColumnIndex("name"));
+                double price = productData.getDouble(productData.getColumnIndex("price"));
+                int id = productData.getInt(productData.getColumnIndex("id"));
+                mProduct.setProductName(name);
+                mProduct.setPrice(price);
+                mProduct.setId(id);
+                // do what ever you want here
+                Log.i("productData", name+"");
+                ProductArrayList.add(mProduct);
+            }while(productData.moveToNext());
+        }
+        productData.close();
+        mDbHelper.close();
+
         itemArrayList = (ArrayList<TableCategoryItem>) toTable.getSerializableExtra("TableCategoryArrayList");
         PCArrayList = (ArrayList<ProductCategory>) toTable.getSerializableExtra("PCArrayList");
-        ProductArrayList = (ArrayList<Product>) toTable.getSerializableExtra("ProductArrayList");
 
 //        int listSize = itemArrayList.size();
 //        for (int j = 0; j<listSize; j++){
@@ -108,30 +131,6 @@ public class ProductsActivity extends AppCompatActivity {
             }
         });
 
-        /**
-         * Enabling Search Filter
-         * */
-        search.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                ProductsActivity.this.mAdapter.getFilter().filter(cs);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
         toCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,5 +144,15 @@ public class ProductsActivity extends AppCompatActivity {
                 ProductsActivity.this.startActivity(toCart);
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }
