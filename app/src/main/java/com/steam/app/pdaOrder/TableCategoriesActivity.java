@@ -39,7 +39,6 @@ public class TableCategoriesActivity extends AppCompatActivity {
     private ConnectionClass connectionClass; //Connection Class Variable
     public int catId;
     private static final String TAG = TableCategoriesActivity.class.getName();
-    int ShpType = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +105,13 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 Log.e("name: ", rs.getString("name"));
 
                                 TableCategoryArrayList.add(new TableCategoryItem(rs.getString("name"),rs.getInt("id")));
+
                                 //insert data into table
-                                myDatabase.execSQL("INSERT INTO tbl_Category VALUES('rs.getString(\"name\")','rs.getInt(\"id\")');");
+                                String name = rs.getString("name");
+                                int id = rs.getInt("id");
+                                myDatabase.execSQL("INSERT INTO tbl_Category Values ('" + name + "' , '" + id + "' );");
+                                Log.i("query1 was executed", "");
+
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
@@ -121,7 +125,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                     }
 
                     Log.e("query 2", "just started");
-                    String query2 = "select des, id name FROM Product_Category";
+                    String query2 = "select des, id FROM Product_Category";
                     ResultSet rs2 = stmt.executeQuery(query2);
 
                     if (rs2 != null) // if resultset not null, I add items to TableCategoryArrayList using class created
@@ -138,7 +142,11 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 catId++;
                                 PCArrayList.add(new ProductCategory(rs2.getString("des")));
                                 //insert data into table
-                                myDatabase.execSQL("INSERT INTO Product_Category VALUES('rs2.getString(\"name\")','rs2.getInt(\"id\")');");
+                                String name = rs2.getString("des");
+                                int id = rs2.getInt("id");
+                                Log.i("name", name);
+                                Log.i("id", id+"");
+                                myDatabase.execSQL("INSERT INTO Product_Category Values ('" + name + "' , '" + id + "' );");
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
@@ -176,16 +184,24 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         Log.e("Status: ", "rs2 not null");
 
                         //create table
-                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE,id INT);");
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT);");
                         while (rs3.next())
                         {
                             try {
-                                //Log.e("id: ", rs3.getString("id"));
+                                //Log.e("id: ", rs3.getInt("id"));
                                 Log.e("name: ", rs3.getString("des"));
 
-                                ProductArrayList.add(new Product(rs3.getString("des"),rs3.getDouble("price"),rs3.getInt("id")));
+                                ProductArrayList.add(new Product(rs3.getString("des"),rs3.getDouble("price"),rs3.getInt("id"),rs3.getInt("category_id")));
                                 //insert data into table
-                                myDatabase.execSQL("INSERT INTO Products VALUES('rs3.getString(\"des\")','rs3.getDouble(\"price\")','rs3.getInt(\"id\")');");
+                                String name = rs3.getString("des");
+                                int id = rs3.getInt("id");
+                                double price = rs3.getDouble("price");
+                                int catId = rs3.getInt("category_id");
+                                Log.i("name", name);
+                                Log.i("id", id+"");
+                                Log.i("price", price+"");
+                                Log.i("catid", catId+"");
+                                myDatabase.execSQL("INSERT INTO Products Values ('" + name + "' , '" + price + "' , '" + id + "', '" + catId + "' );");
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
@@ -223,9 +239,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                 try {
                     myCategoryAdapter = new TablesAdapter(TableCategoryArrayList, TableCategoriesActivity.this);
                     listView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
-
                     listView.setAdapter(myCategoryAdapter);
-
                     Log.e("adapter: ", "OK");
                 } catch (Exception ex)
                 {

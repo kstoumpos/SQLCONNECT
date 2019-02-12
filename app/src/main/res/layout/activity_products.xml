@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -59,6 +60,26 @@
             android:layout_marginBottom="16dp"
             android:elevation="8dp"
             android:src="@android:drawable/checkbox_on_background" />
+
+        <EditText
+            android:id="@+id/search_src_text"
+            android:inputType="text"
+            android:maxLines="1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/toCart"
+            android:hint="@string/search" />
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/search_src_text"
+            android:padding="10dp"
+            android:src="?attr/homeAsUpIndicator" />
 
     </RelativeLayout>
 
