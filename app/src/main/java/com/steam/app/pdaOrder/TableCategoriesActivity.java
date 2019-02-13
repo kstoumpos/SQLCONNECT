@@ -96,6 +96,14 @@ public class TableCategoriesActivity extends AppCompatActivity {
                     {
                         Log.e("Status: ", "rs not null");
 
+                        //deleting old tables
+                        String del = "DROP TABLE tbl_Category;";
+                        myDatabase.execSQL(del);
+                        String del2 = "DROP TABLE Product_Category;";
+                        myDatabase.execSQL(del2);
+                        String del3 = "DROP TABLE Products;";
+                        myDatabase.execSQL(del3);
+
                         //create table
                         myDatabase.execSQL("CREATE TABLE IF NOT EXISTS tbl_Category(id VARCHAR,name VARCHAR);");
                         while (rs.next())
