@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -27,7 +28,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ProductsActivity extends AppCompatActivity {
 
     private ArrayList<Product> ProductArrayList;  //List items Array
     private ArrayList<Product> ProductExtraArrayList;
@@ -44,7 +45,7 @@ public class ProductsActivity extends AppCompatActivity implements SearchView.On
     public ArrayList<TableCategoryItem> itemArrayList;
     private ArrayList<ProductCategory> PCArrayList;  //List items Array
     ProductAdapter mAdapter;
-    EditText search;
+    TextView search;
     ImageButton homeButton;
 
     @Override
@@ -103,25 +104,23 @@ public class ProductsActivity extends AppCompatActivity implements SearchView.On
         itemArrayList = (ArrayList<TableCategoryItem>) toTable.getSerializableExtra("TableCategoryArrayList");
         PCArrayList = (ArrayList<ProductCategory>) toTable.getSerializableExtra("PCArrayList");
 
-//        int listSize = itemArrayList.size();
-//        for (int j = 0; j<listSize; j++){
-//            Log.i(TAG+" itemArrayList name: ", itemArrayList.get(j).getName());
-//        }
-//
-//        int listSize2 = PCArrayList.size();
-//        for (int j = 0; j<listSize2; j++){
-//            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
-//        }
-//
-//        int listSize3 = ProductArrayList.size();
-//        for (int j = 0; j<listSize3; j++){
-//            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(j).getCategoryName());
-//        }
         ProductNameTextView = findViewById(R.id.TableHead);
         ProductNameTextView.setText(ProductName);
 
         mAdapter = new ProductAdapter(this,ProductArrayList);
         ProductListView.setAdapter(mAdapter);
+
+        ProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(ProductsActivity.this, mAdapter.getItem(i).getProductName(), Toast.LENGTH_LONG).show();
+                productsToCart.add(mAdapter.getItem(i));
+                int listSize = productsToCart.size();
+                for (int j = 0; j<listSize; j++){
+                    Log.i("Product to cart: ", productsToCart.get(j).getProductName());
+                }
+            }
+        });
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,15 +143,5 @@ public class ProductsActivity extends AppCompatActivity implements SearchView.On
                 ProductsActivity.this.startActivity(toCart);
             }
         });
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
     }
 }

@@ -7,6 +7,16 @@ public class Product implements Serializable {
 
     private int id;
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    private String comment;
+
     public int getCatId() {
         return catId;
     }
@@ -37,6 +47,14 @@ public class Product implements Serializable {
         this.price = price;
         this.id = id;
         this.catId = catId;
+    }
+
+    public Product(String categoryName, double price, int id, int catId, String comment) {
+        this.productName = categoryName;
+        this.price = price;
+        this.id = id;
+        this.catId = catId;
+        this.comment = comment;
     }
 
     public Product() {

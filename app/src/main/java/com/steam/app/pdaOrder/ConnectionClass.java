@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionClass {
-    String ip = "192.168.1.14";
+    String ip = "192.168.56.1";
     String classs = "net.sourceforge.jtds.jdbc.Driver";
     String db = "smartBonus_lite";
     String un = "sa";

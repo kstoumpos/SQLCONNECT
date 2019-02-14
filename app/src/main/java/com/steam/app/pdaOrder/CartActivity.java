@@ -17,14 +17,14 @@ public class CartActivity extends AppCompatActivity {
 
     private ListView productsListView;
     private static CartAdapter adapter;
-    ImageButton sendOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        ImageButton sendOrder = findViewById(R.id.sendOrder);
+        ImageButton updateOrder = findViewById(R.id.updateOrder);
+        ImageButton sendOrder = findViewById(R.id.send_order);
         productsListView = findViewById(R.id.products_listView);
         ArrayList<Product> myList = (ArrayList<Product>) getIntent().getSerializableExtra("cartList");
 
@@ -41,11 +41,18 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        updateOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CartActivity.this, "update", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         sendOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CartActivity.this, "test", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
+                Toast.makeText(CartActivity.this, "send order", Toast.LENGTH_SHORT).show();
             }
         });
     }

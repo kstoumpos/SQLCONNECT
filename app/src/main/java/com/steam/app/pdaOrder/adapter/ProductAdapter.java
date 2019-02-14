@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +29,15 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.product_item,parent,false);
 
         Product product = products.get(position);
 
         TextView name = listItem.findViewById(R.id.textView_name);
         name.setText(product.getProductName());
+        TextView price = listItem.findViewById(R.id.textView_price);
+        price.setText(product.getPrice()+"");
+
 
         return listItem;
     }

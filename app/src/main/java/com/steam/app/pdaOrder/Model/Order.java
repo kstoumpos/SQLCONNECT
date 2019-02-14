@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class Order {
 
     private double OderPrice;
+
+    public void setOderProducts(ArrayList<Product> oderProducts) {
+        this.oderProducts = oderProducts;
+    }
+
     private ArrayList<Product> oderProducts;
     private boolean orderSent;
 

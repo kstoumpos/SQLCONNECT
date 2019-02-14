@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         android:padding="10dp" >
 
-        <!-- ListRow Left sied Thumbnail image -->
+        <!-- ListRow Left side Thumbnail image -->
 
         <LinearLayout
             android:id="@+id/thumbnail"
@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/thumbnail"
-            android:text="Pineapple"
+            android:text=""
             android:textColor="#040404"
-            android:textSize="15dip"
+            android:textSize="15sp"
             android:typeface="sans" />
 
         <LinearLayout
@@ -57,23 +57,30 @@
 
             <TextView
                 android:id="@+id/plist_price_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_marginLeft="60dip"
                 android:layout_weight="0.23"
                 android:paddingRight="5dip"
-                android:text="Rs. 200"
+                android:text=""
                 android:textColor="#1d1d1d"
-                android:textSize="12dip"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/chk_selectitem"
+                android:id="@+id/edit_item"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_edit"/>
+
+            <ImageButton
+                android:id="@+id/delete_item"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginRight="0dp"
                 android:clickable="true"
+                android:focusable="true"
                 android:src="@drawable/ic_trash" />
         </LinearLayout>
     </RelativeLayout>
