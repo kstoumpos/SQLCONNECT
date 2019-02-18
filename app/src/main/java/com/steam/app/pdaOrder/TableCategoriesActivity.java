@@ -3,6 +3,7 @@ package com.steam.app.pdaOrder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -96,13 +97,28 @@ public class TableCategoriesActivity extends AppCompatActivity {
                     {
                         Log.e("Status: ", "rs not null");
 
-                        //deleting old tables
-                        String del = "DROP TABLE tbl_Category;";
-                        myDatabase.execSQL(del);
-                        String del2 = "DROP TABLE Product_Category;";
-                        myDatabase.execSQL(del2);
-                        String del3 = "DROP TABLE Products;";
-                        myDatabase.execSQL(del3);
+                        //deleting old tables if they exist
+                        String sql = "SELECT name FROM tbl_Category;";
+                        Cursor mCursor = myDatabase.rawQuery(sql, null);
+                        if (mCursor.getCount() > 0) {
+                            String del = "DROP TABLE tbl_Category;";
+                            myDatabase.execSQL(del);
+                            Log.i("error", "table tbl_Category deleted");
+                        }
+                        String sql2 = "SELECT name FROM Product_Category;";
+                        Cursor mCursor2 = myDatabase.rawQuery(sql2, null);
+                        if (mCursor2.getCount() > 0) {
+                            String del2 = "DROP TABLE Product_Category;";
+                            myDatabase.execSQL(del2);
+                            Log.i("error", "table Product_Category deleted");
+                        }
+                        String sql3 = "SELECT name FROM Products;";
+                        Cursor mCursor3 = myDatabase.rawQuery(sql3, null);
+                        if (mCursor3.getCount() > 0) {
+                            String del3 = "DROP TABLE Products;";
+                            myDatabase.execSQL(del3);
+                            Log.i("error", "table Products deleted");
+                        }
 
                         //create table
                         myDatabase.execSQL("CREATE TABLE IF NOT EXISTS tbl_Category(id VARCHAR,name VARCHAR);");
@@ -275,22 +291,20 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         i.putExtra("TableCategoryArrayList", TableCategoryArrayList);
                         i.putExtra("PCArrayList", PCArrayList);
                         i.putExtra("ProductArrayList", ProductArrayList);
-
-                        int listSize = TableCategoryArrayList.size();
-                        for (int j = 0; j<listSize; j++){
-                            Log.i(TAG+" itemArrayList name: ", TableCategoryArrayList.get(j).getName());
-                        }
-
-                        int listSize2 = PCArrayList.size();
-                        for (int j = 0; j<listSize2; j++){
-                            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
-                        }
-
-                        int listSize3 = ProductArrayList.size();
-                        for (int a = 0; a<listSize3; a++){
-                            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(a).getProductName());
-                        }
-
+//                        int listSize = TableCategoryArrayList.size();
+//                        for (int j = 0; j<listSize; j++){
+//                            Log.i(TAG+" itemArrayList name: ", TableCategoryArrayList.get(j).getName());
+//                        }
+//
+//                        int listSize2 = PCArrayList.size();
+//                        for (int j = 0; j<listSize2; j++){
+//                            Log.i(TAG+" PCArrayList name: ", PCArrayList.get(j).getCategoryName());
+//                        }
+//
+//                        int listSize3 = ProductArrayList.size();
+//                        for (int a = 0; a<listSize3; a++){
+//                            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(a).getProductName());
+//                        }
                         startActivity(i);
                     }
                 });

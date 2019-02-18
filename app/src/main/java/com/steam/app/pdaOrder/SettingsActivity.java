@@ -28,12 +28,12 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        edUserName = (EditText)findViewById(R.id.db_username);
-        edDatabase = (EditText)findViewById(R.id.db_name);
-        edIP = (EditText)findViewById(R.id.db_ip);
-        edPassword = (EditText)findViewById(R.id.db_password);
+        edUserName = findViewById(R.id.db_username);
+        edDatabase = findViewById(R.id.db_name);
+        edIP = findViewById(R.id.db_ip);
+        edPassword = findViewById(R.id.db_password);
 
-        saveBtn = (Button)findViewById(R.id.btn_save);
+        saveBtn = findViewById(R.id.btn_save);
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {

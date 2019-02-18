@@ -10,6 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:contentDescription="@string/settings"
         android:text="@string/action_settings"
         android:textSize="24sp"
@@ -32,33 +33,44 @@
 
 
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/dbUser"
         android:id="@+id/db_username"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/dbUser"
         android:inputType="textCapWords" />
+
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:hint="@string/dbPass"
-        android:layout_marginTop="10dp"
         android:id="@+id/db_password"
-        android:inputType="textPassword"/>
-    <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:hint="@string/dbName"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/dbPass"
+        android:inputType="textPassword" />
+
+    <EditText
         android:id="@+id/db_name"
-        android:inputType="textPassword"/>
-    <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:hint="@string/dbIP"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/dbName"
+        android:inputType="textPassword" />
+
+    <EditText
         android:id="@+id/db_ip"
-        android:inputType="textPassword"/>
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/dbIP"
+        android:inputType="textPassword" />
 
     <Button
         android:layout_marginTop="15dp"
