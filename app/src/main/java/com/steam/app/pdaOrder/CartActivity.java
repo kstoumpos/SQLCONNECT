@@ -19,6 +19,8 @@ public class CartActivity extends AppCompatActivity {
 
     private ListView productsListView;
     private static CartAdapter adapter;
+    public int catId, id;
+    private static final String TAG = CartActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,21 @@ public class CartActivity extends AppCompatActivity {
         Button toProducts = findViewById(R.id.toProducts);
         final ArrayList<Product> myList = (ArrayList<Product>) getIntent().getSerializableExtra("cartList");
         double cost = 0;
+
+        //getting table TableId and catId
+        Intent toCart = getIntent();
+        Bundle bundle = toCart.getExtras();
+
+        if (bundle != null) {
+            catId = bundle.getInt("catId");
+            id = bundle.getInt("TableId");
+        } else {
+            catId = 0;
+            id = 0;
+        }
+        Log.e(TAG+" catId: ", catId + "");
+        Log.e(TAG+" id: ", id + "");
+
         //create database
         final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase",MODE_PRIVATE,null);
 
@@ -38,12 +55,13 @@ public class CartActivity extends AppCompatActivity {
         Log.i("on update","table cart created");
 
         //myDatabase.execSQL("SELECT id, products, cost FROM Cart;");
-        Cursor cursor = myDatabase.rawQuery("select * from Cart",null);
+        Cursor cursor = myDatabase.rawQuery("SELECT * FROM Cart",null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 String name = cursor.getString(cursor.getColumnIndex("products"));
                 double price = cursor.getDouble(cursor.getColumnIndex("cost"));
                 Product mProduct = new Product(name, price, 0, 0);
+                Log.i("cart products from db", name);
                 myList.add(mProduct);
                 cursor.moveToNext();
             }
@@ -80,7 +98,6 @@ public class CartActivity extends AppCompatActivity {
                 for (int i=0;i<adapter.getCount();i++){
                     adapter.getItem(i);
                     Log.i("updated cart with", adapter.getItem(i).getProductName());
-                    //myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
                 }
             }
         });
@@ -102,9 +119,12 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("to products", "clicked");
                 onBackPressed();
-//                Intent toProducts = new Intent(CartActivity.this, SingleTableActivity.class);
-//                toProducts.putExtra("alreadyInCartList", myList); //Optional parameters
-//                CartActivity.this.startActivity(toProducts);
+                myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
+                for (int i=0;i<adapter.getCount();i++){
+                    adapter.getItem(i);
+                    myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
+                    Log.i("updated db with", adapter.getItem(i).getProductName());
+                }
             }
         });
     }

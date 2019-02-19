@@ -126,11 +126,13 @@ public class ProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(ProductsActivity.this, "test", Toast.LENGTH_SHORT).show();
                 Log.e(TAG+" TableId: ", id + "");
-                Log.e(TAG+" TableName: ", ProductName + "");
+                Log.e(TAG+" Table Name: ", ProductName + "");
                 Log.e(TAG+" catId: ", catId + "");
 
                 Intent toCart = new Intent(ProductsActivity.this, CartActivity.class);
                 toCart.putExtra("cartList", productsToCart); //Optional parameters
+                toCart.putExtra("TableId", id);
+                toCart.putExtra("catId", catId);
                 ProductsActivity.this.startActivity(toCart);
             }
         });

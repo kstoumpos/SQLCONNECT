@@ -15,6 +15,8 @@
         android:divider="#f55" />
 
     <RelativeLayout
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,20 +24,23 @@
         android:id="@+id/updateOrder"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
         android:src="@drawable/ic_refresh" />
 
         <ImageButton
             android:id="@+id/send_order"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/updateOrder"
-            android:src="@color/back" />
+            android:background="@android:drawable/ic_menu_send" />
 
         <Button
             android:id="@+id/toProducts"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/send_order"
             android:background="@color/Main"
