@@ -8,19 +8,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<TextView-->
-            <!--android:id="@+id/TableHeaderLabel"-->
-            <!--android:layout_alignLeft="@+id/TableHeader"-->
-            <!--android:text="@string/table_label"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="40sp"/>-->
+        <TextView
+            android:id="@+id/TableHeaderLabel"
+            android:layout_alignParentLeft="true"
+            android:text="@string/table_label"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="25sp"/>
 
         <TextView
             android:id="@+id/TableHeader"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp" />
+            android:layout_height="30dp"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/TableId"

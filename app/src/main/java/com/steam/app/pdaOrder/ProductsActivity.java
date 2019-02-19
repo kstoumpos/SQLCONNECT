@@ -2,6 +2,7 @@ package com.steam.app.pdaOrder;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -107,7 +108,7 @@ public class ProductsActivity extends AppCompatActivity {
                 Toast.makeText(ProductsActivity.this, mAdapter.getItem(i).getProductName(), Toast.LENGTH_LONG).show();
                 productsToCart.add(mAdapter.getItem(i));
                 int listSize = productsToCart.size();
-                for (int j = 0; j<listSize; j++){
+                for (int j = 0; j < listSize; j++) {
                     Log.i("Product to cart: ", productsToCart.get(j).getProductName());
                 }
             }

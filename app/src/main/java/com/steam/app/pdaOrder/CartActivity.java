@@ -21,6 +21,8 @@ public class CartActivity extends AppCompatActivity {
     private static CartAdapter adapter;
     public int catId, id;
     private static final String TAG = CartActivity.class.getName();
+    //create database
+    final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase", MODE_PRIVATE, null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +47,14 @@ public class CartActivity extends AppCompatActivity {
             catId = 0;
             id = 0;
         }
-        Log.e(TAG+" catId: ", catId + "");
-        Log.e(TAG+" id: ", id + "");
-
-        //create database
-        final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase",MODE_PRIVATE,null);
+        Log.e(TAG + " catId: ", catId + "");
+        Log.e(TAG + " id: ", id + "");
 
         myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE );");
-        Log.i("on update","table cart created");
+        Log.i("on update", "table cart created");
 
         //myDatabase.execSQL("SELECT id, products, cost FROM Cart;");
-        Cursor cursor = myDatabase.rawQuery("SELECT * FROM Cart",null);
+        Cursor cursor = myDatabase.rawQuery("SELECT * FROM Cart", null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 String name = cursor.getString(cursor.getColumnIndex("products"));
@@ -68,13 +67,13 @@ public class CartActivity extends AppCompatActivity {
         }
 
         int listSize = myList.size();
-        for (int i = 0; i<listSize; i++){
+        for (int i = 0; i < listSize; i++) {
             Log.i("Product name: ", myList.get(i).getProductName());
             cost = cost + myList.get(i).getPrice();
-            Log.i("Order price", cost+"");
+            Log.i("Order price", cost + "");
         }
 
-        adapter = new CartAdapter(myList,getApplicationContext());
+        adapter = new CartAdapter(myList, getApplicationContext());
         productsListView.setAdapter(adapter);
 
         runOnUiThread(new Runnable() {
@@ -89,13 +88,13 @@ public class CartActivity extends AppCompatActivity {
                 Toast.makeText(CartActivity.this, "update", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
                 myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE );");
-                Log.i("on update","table cart created");
+                Log.i("on update", "table cart created");
                 adapter.notifyDataSetChanged();
                 productsListView.setAdapter(adapter);
 
                 startActivity(getIntent());
                 myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
-                for (int i=0;i<adapter.getCount();i++){
+                for (int i = 0; i < adapter.getCount(); i++) {
                     adapter.getItem(i);
                     Log.i("updated cart with", adapter.getItem(i).getProductName());
                 }
@@ -120,12 +119,24 @@ public class CartActivity extends AppCompatActivity {
                 Log.i("to products", "clicked");
                 onBackPressed();
                 myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
-                for (int i=0;i<adapter.getCount();i++){
+                for (int i = 0; i < adapter.getCount(); i++) {
                     adapter.getItem(i);
                     myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
                     Log.i("updated db with", adapter.getItem(i).getProductName());
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i("to products", "clicked");
+        onBackPressed();
+        myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
+        for (int i = 0; i < adapter.getCount(); i++) {
+            adapter.getItem(i);
+            myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
+            Log.i("updated db with", adapter.getItem(i).getProductName());
+        }
     }
 }
