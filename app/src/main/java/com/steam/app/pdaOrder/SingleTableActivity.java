@@ -24,6 +24,7 @@ public class SingleTableActivity extends AppCompatActivity {
     TextView tableNameTextView;
     public ArrayList<TableCategoryItem> itemArrayList;
     public ArrayList<Product> ProductArrayList;
+    public ArrayList<Product> AlreadyInCartArrayList;
     CategoryAdapter mAdapter;
 
     @Override

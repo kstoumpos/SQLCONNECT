@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.google.gson.Gson;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.adapter.CartAdapter;
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class CartActivity extends AppCompatActivity {
         ImageButton updateOrder = findViewById(R.id.updateOrder);
         ImageButton sendOrder = findViewById(R.id.send_order);
         productsListView = findViewById(R.id.products_listView);
+        Button toProducts = findViewById(R.id.toProducts);
         final ArrayList<Product> myList = (ArrayList<Product>) getIntent().getSerializableExtra("cartList");
         double cost = 0;
         //create database
@@ -48,18 +49,16 @@ public class CartActivity extends AppCompatActivity {
             }
         }
 
-        final int listSize = myList.size();
+        int listSize = myList.size();
         for (int i = 0; i<listSize; i++){
             Log.i("Product name: ", myList.get(i).getProductName());
             cost = cost + myList.get(i).getPrice();
             Log.i("Order price", cost+"");
         }
 
-        Gson gson = new Gson();
-        final String inputString = gson.toJson(myList);
-
         adapter = new CartAdapter(myList,getApplicationContext());
         productsListView.setAdapter(adapter);
+
         runOnUiThread(new Runnable() {
             public void run() {
                 adapter.notifyDataSetChanged();
@@ -73,14 +72,15 @@ public class CartActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE );");
                 Log.i("on update","table cart created");
-                finish();
+                adapter.notifyDataSetChanged();
+                productsListView.setAdapter(adapter);
+
                 startActivity(getIntent());
-                if (listSize != 0) {
-                    for (int i = 0; i < listSize; i++) {
-//                        Log.i("Product name: ", myList.get(i).getProductName());
-                        myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + myList.get(i).getProductName() + "', '" + myList.get(i).getPrice() + "');");
-                        Log.i(myList.get(i).getProductName(), "to db");
-                    }
+                myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
+                for (int i=0;i<adapter.getCount();i++){
+                    adapter.getItem(i);
+                    Log.i("updated cart with", adapter.getItem(i).getProductName());
+                    //myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
                 }
             }
         });
@@ -94,6 +94,17 @@ public class CartActivity extends AppCompatActivity {
                 Log.i("cart table content", "deleted");
                 Intent toTables = new Intent(CartActivity.this, TableCategoriesActivity.class);
                 CartActivity.this.startActivity(toTables);
+            }
+        });
+
+        toProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("to products", "clicked");
+                onBackPressed();
+//                Intent toProducts = new Intent(CartActivity.this, SingleTableActivity.class);
+//                toProducts.putExtra("alreadyInCartList", myList); //Optional parameters
+//                CartActivity.this.startActivity(toProducts);
             }
         });
     }

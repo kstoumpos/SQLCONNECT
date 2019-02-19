@@ -1,6 +1,7 @@
 package com.steam.app.pdaOrder.adapter;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,11 +15,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.steam.app.pdaOrder.CartActivity;
 import com.steam.app.pdaOrder.Model.Order;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.R;
 import java.util.ArrayList;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickListener{
 
@@ -52,7 +58,7 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
     private int lastPosition = -1;
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
         Product product = getItem(position);
@@ -74,12 +80,12 @@ public class CartAdapter extends ArrayAdapter<Product> implements View.OnClickLi
             viewHolder.remove.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Log.i("remove ", "clicked");
-
-                        dataSet.remove(getItem(position));
-                        //dataSet.notifyAll();
+                    Toast.makeText(parent.getContext(), "Πατήστε ανανέωση!", Toast.LENGTH_LONG).show();
+                    dataSet.remove(getItem(position));
                         int listSize = dataSet.size();
                     for (int i = 0; i<listSize; i++){
                         Log.i("Product in cart: ", dataSet.get(i).getProductName());
+                        Log.i("Product position", i+"");
                     }
                 }
             });

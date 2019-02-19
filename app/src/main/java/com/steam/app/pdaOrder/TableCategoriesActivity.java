@@ -98,6 +98,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         Log.e("Status: ", "rs not null");
 
                         //deleting old tables if they exist
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS tbl_Category(id VARCHAR,name VARCHAR);");
                         String sql = "SELECT name FROM tbl_Category;";
                         Cursor mCursor = myDatabase.rawQuery(sql, null);
                         if (mCursor.getCount() > 0) {
@@ -105,6 +106,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                             myDatabase.execSQL(del);
                             Log.i("error", "table tbl_Category deleted");
                         }
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Product_Category(name VARCHAR,id INT);");
                         String sql2 = "SELECT name FROM Product_Category;";
                         Cursor mCursor2 = myDatabase.rawQuery(sql2, null);
                         if (mCursor2.getCount() > 0) {
@@ -112,6 +114,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                             myDatabase.execSQL(del2);
                             Log.i("error", "table Product_Category deleted");
                         }
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT);");
                         String sql3 = "SELECT name FROM Products;";
                         Cursor mCursor3 = myDatabase.rawQuery(sql3, null);
                         if (mCursor3.getCount() > 0) {
