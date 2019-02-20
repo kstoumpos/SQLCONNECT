@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
+import com.steam.app.pdaOrder.Model.TableItem;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -40,6 +42,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
     private ConnectionClass connectionClass; //Connection Class Variable
     public int catId;
     private static final String TAG = TableCategoriesActivity.class.getName();
+    int ShpType = 1;
+    private ArrayList<TableItem> tableItemArrayList;  //List items Array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +125,15 @@ public class TableCategoriesActivity extends AppCompatActivity {
                             String del3 = "DROP TABLE Products;";
                             myDatabase.execSQL(del3);
                             Log.i("error", "table Products deleted");
+                        }
+
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Tables(name VARCHAR,id INT, catid INT);");
+                        String sql4 = "SELECT name FROM Tables;";
+                        Cursor mCursor4 = myDatabase.rawQuery(sql4, null);
+                        if (mCursor4.getCount() > 0) {
+                            String del4 = "DROP TABLE Tables;";
+                            myDatabase.execSQL(del4);
+                            Log.i("error", "table Tables deleted");
                         }
 
                         //create table
@@ -215,7 +228,6 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         while (rs3.next())
                         {
                             try {
-                                //Log.e("id: ", rs3.getInt("id"));
                                 Log.e("name: ", rs3.getString("des"));
 
                                 ProductArrayList.add(new Product(rs3.getString("des"),rs3.getDouble("price"),rs3.getInt("id"),rs3.getInt("category_id")));
@@ -238,6 +250,42 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         success = true;
                     } else {
                         msg = "No Data found!";
+                        success = false;
+                    }
+                    String Sql_string;
+                    Sql_string = "Select id,name,catid,capacity,isnull(tbl_setTable.state,0) as state,isnull(cur_people,0) as cur_people,dateOpened";
+                    Sql_string += " From tbl_setTable ";
+                    Sql_string += "Where shoptype=" + ShpType;
+                    //Sql_string += "Where shoptype=" + ShpType + " and catid =" + CatId; //to posto pou epilex8ike CatId
+                    Sql_string += " Order by tbl_setTable.vispriority;";
+
+                    Statement statement = conn.createStatement();
+                    ResultSet resultSet = statement.executeQuery(Sql_string);
+                    if (resultSet != null) // if resultset not null, I add items to itemArrayList using class created
+                    {
+                        Log.e("Status: ", "resultSet not null");
+                        Log.e("Result", resultSet.toString());
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Tables(name VARCHAR,id INT, catid INT);");
+                        while (resultSet.next())
+                        {
+                            try {
+                                Log.i(TAG + " id: ", resultSet.getString("id"));
+                                Log.i(TAG + " name: ", resultSet.getString("name"));
+                                Log.i(TAG + " catid", resultSet.getInt("catid")+"");
+//                                tableItemArrayList.add(new TableItem(resultSet.getInt("id"),resultSet.getString("name"), resultSet.getInt("catid")));
+                                String TableName = resultSet.getString("name");
+                                int TableId = resultSet.getInt("id");
+                                int TableCatId = resultSet.getInt("catid");
+                                myDatabase.execSQL("INSERT INTO Tables Values ('" + TableName + "' , '" + TableId + "' , '" + TableCatId + "');");
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                Log.e(TAG + "Status: ", "exception after query");
+                            }
+                        }
+                        msg = "Found";
+                        success = true;
+                    } else {
+                        msg = "No Tables found!";
                         success = false;
                     }
                 }
