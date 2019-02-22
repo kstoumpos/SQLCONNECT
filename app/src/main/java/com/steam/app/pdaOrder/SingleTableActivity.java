@@ -1,6 +1,8 @@
 package com.steam.app.pdaOrder;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
+import com.steam.app.pdaOrder.Model.TableItem;
 import com.steam.app.pdaOrder.adapter.CategoryAdapter;
 import java.util.ArrayList;
 
@@ -20,12 +23,12 @@ public class SingleTableActivity extends AppCompatActivity {
     private GridView PCListView; // ListView
     private static final String TAG = SingleTableActivity.class.getName();
     public String TableName;
-    public int TableId;
+    public int TableId, catId;
     TextView tableNameTextView;
     public ArrayList<TableCategoryItem> itemArrayList;
     public ArrayList<Product> ProductArrayList;
-    public ArrayList<Product> AlreadyInCartArrayList;
     CategoryAdapter mAdapter;
+    int CategoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +45,32 @@ public class SingleTableActivity extends AppCompatActivity {
         if (bundle != null) {
             TableId = bundle.getInt("TableId");
             TableName = bundle.getString("TableName");
+            catId = bundle.getInt("catId");
         } else {
             TableId = 0;
             TableName = null;
+            catId = 0;
         }
+
+        CategoryId = catId;
         Log.e(TAG+" TableId: ", TableId + "");
         Log.e(TAG+" TableName: ", TableName + "");
+        Log.e("CategoryId", CategoryId + "");
+
+        //create database
+        SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase",MODE_PRIVATE,null);
 
         itemArrayList = (ArrayList<TableCategoryItem>) toTable.getSerializableExtra("TableCategoryArrayList");
         PCArrayList = (ArrayList<ProductCategory>) toTable.getSerializableExtra("PCArrayList");
+//        if(PCArrayList.isEmpty()) {
+//            String sql = "SELECT name,price,id,category_id FROM Products;";
+//            myDatabase.execSQL("SELECT name,price,id,category_id FROM Products;");
+//            Cursor categories = myDatabase.rawQuery(sql, null);
+//            TableItem tableItem = new TableItem();
+//            int tableName = categories.getColumnIndex("name");
+//            Log.e("tableName", tableName + "");
+////            TableCategoryArrayList.add(new TableCategoryItem(rs.getString("name"),rs.getInt("id")));
+//        }
         ProductArrayList = (ArrayList<Product>) toTable.getSerializableExtra("ProductArrayList");
 
 //        int listSize = itemArrayList.size();
@@ -78,8 +98,9 @@ public class SingleTableActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Log.i("item clicked", position+"");
-                Log.i("catId clicked", position+1+"");
+                Log.i("item clicked", position + "");
+                Log.i("catId clicked", position + 1 + "");
+                Log.i("CategoryId", CategoryId + "");
                 int catId  = position + 1;
                 // DO something
                 Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
@@ -90,8 +111,13 @@ public class SingleTableActivity extends AppCompatActivity {
                 toProducts.putExtra("PCArrayList", PCArrayList);
                 toProducts.putExtra("ProductArrayList", ProductArrayList);
                 toProducts.putExtra("catId", catId);
+                toProducts.putExtra("CategoryId", CategoryId);
                 SingleTableActivity.this.startActivity(toProducts);
             }
         });
+    }
+
+    public void ReturnBack(View view){
+        super.onBackPressed();
     }
 }

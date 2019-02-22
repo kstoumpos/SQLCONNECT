@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
 import com.steam.app.pdaOrder.adapter.ProductAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductsActivity extends AppCompatActivity {
 
@@ -29,16 +33,17 @@ public class ProductsActivity extends AppCompatActivity {
     private static final String TAG = ProductsActivity.class.getName();
     public String ProductName;
     public int id;
-    TextView ProductNameTextView;
+    TextView ProductNameTextView, total;
     public int catId;
     ImageButton toCart;
-    Order myOrder;
+    Button back;
     private ArrayList<Product> productsToCart;
     public ArrayList<TableCategoryItem> itemArrayList;
     private ArrayList<ProductCategory> PCArrayList;  //List items Array
     ProductAdapter mAdapter;
     TextView search;
     ImageButton homeButton;
+    public double cost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class ProductsActivity extends AppCompatActivity {
         ProductArrayList = new ArrayList<>(); // ArrayList Initialization
         ProductExtraArrayList = new ArrayList<>();
         productsToCart = new ArrayList<>();
+
         ProductListView = findViewById(R.id.productListView);
         ProductExtraListView = findViewById(R.id.confProductListView);
         toCart = findViewById(R.id.toCart);
@@ -102,6 +108,23 @@ public class ProductsActivity extends AppCompatActivity {
         mAdapter = new ProductAdapter(this,ProductArrayList);
         ProductListView.setAdapter(mAdapter);
 
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                ProductsActivity.this.mAdapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         ProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -110,6 +133,8 @@ public class ProductsActivity extends AppCompatActivity {
                 int listSize = productsToCart.size();
                 for (int j = 0; j < listSize; j++) {
                     Log.i("Product to cart: ", productsToCart.get(j).getProductName());
+                    Log.i("Cost to cart: ", productsToCart.get(j).getPrice()+"");
+                    cost = cost + productsToCart.get(j).getPrice();
                 }
             }
         });
@@ -137,5 +162,9 @@ public class ProductsActivity extends AppCompatActivity {
                 ProductsActivity.this.startActivity(toCart);
             }
         });
+    }
+
+    public void ReturnBack(View view){
+        super.onBackPressed();
     }
 }

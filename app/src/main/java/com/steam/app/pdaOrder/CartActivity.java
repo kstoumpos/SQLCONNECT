@@ -21,13 +21,15 @@ public class CartActivity extends AppCompatActivity {
     private static CartAdapter adapter;
     public int catId, id;
     private static final String TAG = CartActivity.class.getName();
-    //create database
-    final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase", MODE_PRIVATE, null);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        //create database
+        final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase", MODE_PRIVATE, null);
 
         ImageButton updateOrder = findViewById(R.id.updateOrder);
         ImageButton sendOrder = findViewById(R.id.send_order);
@@ -109,6 +111,8 @@ public class CartActivity extends AppCompatActivity {
                 myList.clear();
                 Log.i("cart table content", "deleted");
                 Intent toTables = new Intent(CartActivity.this, TableCategoriesActivity.class);
+                toTables.putExtra("catId", catId);
+                myDatabase.close();
                 CartActivity.this.startActivity(toTables);
             }
         });
@@ -130,13 +134,15 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //create database
+        final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase", MODE_PRIVATE, null);
         Log.i("to products", "clicked");
-        onBackPressed();
         myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
         for (int i = 0; i < adapter.getCount(); i++) {
             adapter.getItem(i);
             myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
             Log.i("updated db with", adapter.getItem(i).getProductName());
         }
+        super.onBackPressed();
     }
 }

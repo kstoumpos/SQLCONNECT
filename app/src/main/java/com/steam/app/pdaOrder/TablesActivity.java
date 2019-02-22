@@ -97,10 +97,10 @@ public class TablesActivity extends AppCompatActivity {
 
                 toTable.putExtra("TableName", name);
                 toTable.putExtra("TableId", id);
-                //itemArrayList, PCArrayList, ProductArrayList
                 toTable.putExtra("TableCategoryArrayList", itemArrayList);
                 toTable.putExtra("PCArrayList", PCArrayList);
                 toTable.putExtra("ProductArrayList", ProductArrayList);
+                toTable.putExtra("catId", CatId);
 
                 startActivity(toTable);
             }

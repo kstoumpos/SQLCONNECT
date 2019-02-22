@@ -20,8 +20,6 @@ import android.widget.Toast;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
-import com.steam.app.pdaOrder.Model.TableItem;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -43,7 +41,6 @@ public class TableCategoriesActivity extends AppCompatActivity {
     public int catId;
     private static final String TAG = TableCategoriesActivity.class.getName();
     int ShpType = 1;
-    private ArrayList<TableItem> tableItemArrayList;  //List items Array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +70,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() //Starts the progress dialog
         {
-            progress = ProgressDialog.show(TableCategoriesActivity.this, "Synchronising",
-                    "ListView Loading! Please Wait...", true);
+            progress = ProgressDialog.show(TableCategoriesActivity.this, "Συγχρονισμός",
+                    "Φόρτωση δεδομένων! Παρακαλώ περιμένετε...", true);
         }
 
         @Override
@@ -357,6 +354,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
 //                            Log.i(TAG+" ProductArrayList name ", ProductArrayList.get(a).getProductName());
 //                        }
                         startActivity(i);
+
                     }
                 });
             }
