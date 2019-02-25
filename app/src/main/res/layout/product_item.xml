@@ -11,7 +11,7 @@
         android:id="@+id/textView_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:background="@color/colorPrimary"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/euro"
@@ -34,6 +34,6 @@
         android:layout_toRightOf="@+id/textView_price"
         android:background="@color/colorPrimary"
         android:text="@string/euro"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

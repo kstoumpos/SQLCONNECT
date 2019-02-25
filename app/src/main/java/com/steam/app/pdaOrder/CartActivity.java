@@ -2,6 +2,7 @@ package com.steam.app.pdaOrder;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.adapter.CartAdapter;
@@ -21,12 +23,16 @@ public class CartActivity extends AppCompatActivity {
     private static CartAdapter adapter;
     public int catId, id;
     private static final String TAG = CartActivity.class.getName();
+    TextView mealTotalText;
+    ArrayList<Product> orders;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        orders = getListItemData();
 
         //create database
         final SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase", MODE_PRIVATE, null);
@@ -35,6 +41,7 @@ public class CartActivity extends AppCompatActivity {
         ImageButton sendOrder = findViewById(R.id.send_order);
         productsListView = findViewById(R.id.products_listView);
         Button toProducts = findViewById(R.id.toProducts);
+        mealTotalText = findViewById(R.id.meal_total);
         final ArrayList<Product> myList = (ArrayList<Product>) getIntent().getSerializableExtra("cartList");
         double cost = 0;
 
@@ -52,7 +59,7 @@ public class CartActivity extends AppCompatActivity {
         Log.e(TAG + " catId: ", catId + "");
         Log.e(TAG + " id: ", id + "");
 
-        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE );");
+        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE, comment VARCHAR);");
         Log.i("on update", "table cart created");
 
         //myDatabase.execSQL("SELECT id, products, cost FROM Cart;");
@@ -77,6 +84,7 @@ public class CartActivity extends AppCompatActivity {
 
         adapter = new CartAdapter(myList, getApplicationContext());
         productsListView.setAdapter(adapter);
+        adapter.registerDataSetObserver(observer);
 
         runOnUiThread(new Runnable() {
             public void run() {
@@ -89,10 +97,10 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(CartActivity.this, "update", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
-                myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE );");
+                myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Cart(id INT, products VARCHAR,cost DOUBLE,comment VARCHAR);");
                 Log.i("on update", "table cart created");
                 adapter.notifyDataSetChanged();
-                productsListView.setAdapter(adapter);
+                //productsListView.setAdapter(adapter);
 
                 startActivity(getIntent());
                 myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
@@ -122,15 +130,32 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("to products", "clicked");
                 onBackPressed();
-                myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    adapter.getItem(i);
-                    myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
-                    Log.i("updated db with", adapter.getItem(i).getProductName());
-                }
+//                myDatabase.execSQL("DELETE FROM Cart WHERE id=1;");
+//                for (int i = 0; i < adapter.getCount(); i++) {
+//                    adapter.getItem(i);
+//                    myDatabase.execSQL("INSERT INTO Cart (id,products,cost) VALUES ( 1,'" + adapter.getItem(i).getProductName() + "', '" + adapter.getItem(i).getPrice() + "');");
+//                    Log.i("updated db with", adapter.getItem(i).getProductName());
+//                }
             }
         });
     }
+
+    public int calculateMealTotal(){
+        int mealTotal = 0;
+        for(Product order : orders){
+            mealTotal += order.getPrice() * order.getmQuantity();
+        }
+        return mealTotal;
+    }
+
+    DataSetObserver observer = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            Log.i(TAG,"setMealTotal");
+            setMealTotal();
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -144,5 +169,15 @@ public class CartActivity extends AppCompatActivity {
             Log.i("updated db with", adapter.getItem(i).getProductName());
         }
         super.onBackPressed();
+    }
+
+    private ArrayList<Product> getListItemData(){
+        ArrayList<Product> listViewItems = new ArrayList<>();
+        listViewItems.add(new Product());
+        return listViewItems;
+    }
+
+    public void setMealTotal(){
+        mealTotalText.setText(calculateMealTotal() + " " +"€");
     }
 }

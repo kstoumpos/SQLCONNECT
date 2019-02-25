@@ -118,12 +118,12 @@ public class MainActivity extends AppCompatActivity
 
                         if(rs.next())
                         {
-                            z = "Login successfull";
+                            z = "Επιτυχής σύνδεση";
                             isSuccess = true;
                         }
                         else
                         {
-                            z = "Invalid Credentials";
+                            z = "Λάθος στοιχεία";
                             isSuccess = false;
                         }
                     }

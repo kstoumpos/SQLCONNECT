@@ -45,5 +45,17 @@
             android:layout_toRightOf="@id/send_order"
             android:background="@color/Main"
             android:text="@string/products" />
+
+        <TextView
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:id="@+id/meal_total"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textStyle="bold"
+            android:padding="@dimen/activity_horizontal_margin"
+            />
     </RelativeLayout>
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.steam.app.pdaOrder;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,13 +15,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.steam.app.pdaOrder.DB.DBAdapter;
-import com.steam.app.pdaOrder.Model.Order;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
 import com.steam.app.pdaOrder.adapter.ProductAdapter;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ProductsActivity extends AppCompatActivity {
 

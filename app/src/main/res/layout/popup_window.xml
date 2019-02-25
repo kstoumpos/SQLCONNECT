@@ -13,27 +13,8 @@
         android:id="@+id/popup_title"
         android:text=""/>
 
-    <TextView
-        android:id="@+id/qty"
-        android:layout_below="@+id/popup_title"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/qty"
-        android:textSize="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <EditText
-        android:id="@+id/qty_num"
-        android:inputType="number"
-        android:layout_marginRight="10dp"
         android:layout_below="@+id/popup_title"
-        android:layout_toRightOf="@+id/qty"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:layout_below="@+id/qty"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"

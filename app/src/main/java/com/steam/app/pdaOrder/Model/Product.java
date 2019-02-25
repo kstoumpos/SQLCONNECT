@@ -6,6 +6,12 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     private int id;
+    private int mAmount;
+    private int mQuantity;
+    private String productName;
+    private double price;
+    private String comment;
+    private int catId;
 
     public String getComment() {
         return comment;
@@ -15,8 +21,6 @@ public class Product implements Serializable {
         this.comment = comment;
     }
 
-    private String comment;
-
     public int getCatId() {
         return catId;
     }
@@ -25,14 +29,9 @@ public class Product implements Serializable {
         this.catId = catId;
     }
 
-    private int catId;
-
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-    private String productName;
-    private double price;
 
     public double getPrice() {
         return price;
@@ -60,7 +59,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    protected Product(Parcel in) {
+    public Product(Parcel in) {
         productName = in.readString();
         price = in.readDouble();
         id = in.readInt();
@@ -77,6 +76,28 @@ public class Product implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getmAmount() {
+        return mAmount;
+    }
+
+    public int getmQuantity(){
+        return mQuantity;
+    }
+
+    public void addToQuantity(){
+        this.mQuantity += 1;
+    }
+
+    public void setmQuantity(int mQuantity) {
+        this.mQuantity = mQuantity;
+    }
+
+    public void removeFromQuantity(){
+        if(this.mQuantity > 1){
+            this.mQuantity -= 1;
+        }
     }
 }
 

@@ -138,8 +138,8 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         while (rs.next())
                         {
                             try {
-                                Log.e("id: ", rs.getString("id"));
-                                Log.e("name: ", rs.getString("name"));
+//                                Log.e("id: ", rs.getString("id"));
+//                                Log.e("name: ", rs.getString("name"));
 
                                 TableCategoryArrayList.add(new TableCategoryItem(rs.getString("name"),rs.getInt("id")));
 
