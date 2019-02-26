@@ -154,7 +154,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 Log.e("Status: ", "exception after query");
                             }
                         }
-                        msg = "Found table categories";
+                        msg = "";
                         success = true;
                     } else {
                         msg = "No Data found!";
@@ -181,15 +181,15 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 //insert data into table
                                 String name = rs2.getString("des");
                                 int id = rs2.getInt("id");
-                                Log.i("name", name);
-                                Log.i("id", id+"");
+//                                Log.i("name", name);
+//                                Log.i("id", id+"");
                                 myDatabase.execSQL("INSERT INTO Product_Category Values ('" + name + "' , '" + id + "' );");
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
                             }
                         }
-                        msg = "Found product categories";
+                        msg = "";
                         success = true;
                     } else {
                         msg = "No Data found!";
@@ -233,17 +233,17 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 int id = rs3.getInt("id");
                                 double price = rs3.getDouble("price");
                                 int catId = rs3.getInt("category_id");
-                                Log.i("name", name);
-                                Log.i("id", id+"");
-                                Log.i("price", price+"");
-                                Log.i("catid", catId+"");
+//                                Log.i("name", name);
+//                                Log.i("id", id+"");
+//                                Log.i("price", price+"");
+//                                Log.i("catid", catId+"");
                                 myDatabase.execSQL("INSERT INTO Products Values ('" + name + "' , '" + price + "' , '" + id + "', '" + catId + "' );");
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
                             }
                         }
-                        msg = "Found product categories";
+                        msg = "";
                         success = true;
                     } else {
                         msg = "No Data found!";
@@ -266,9 +266,9 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         while (resultSet.next())
                         {
                             try {
-                                Log.i(TAG + " id: ", resultSet.getString("id"));
-                                Log.i(TAG + " name: ", resultSet.getString("name"));
-                                Log.i(TAG + " catid", resultSet.getInt("catid")+"");
+//                                Log.i(TAG + " id: ", resultSet.getString("id"));
+//                                Log.i(TAG + " name: ", resultSet.getString("name"));
+//                                Log.i(TAG + " catid", resultSet.getInt("catid")+"");
 //                                tableItemArrayList.add(new TableItem(resultSet.getInt("id"),resultSet.getString("name"), resultSet.getInt("catid")));
                                 String TableName = resultSet.getString("name");
                                 int TableId = resultSet.getInt("id");
@@ -279,7 +279,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                                 Log.e(TAG + "Status: ", "exception after query");
                             }
                         }
-                        msg = "Found";
+                        msg = "";
                         success = true;
                     } else {
                         msg = "No Tables found!";

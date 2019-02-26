@@ -1,8 +1,6 @@
 package com.steam.app.pdaOrder;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import com.steam.app.pdaOrder.Model.Product;
 import com.steam.app.pdaOrder.Model.ProductCategory;
 import com.steam.app.pdaOrder.Model.TableCategoryItem;
-import com.steam.app.pdaOrder.Model.TableItem;
 import com.steam.app.pdaOrder.adapter.CategoryAdapter;
 import java.util.ArrayList;
 
@@ -57,9 +54,6 @@ public class SingleTableActivity extends AppCompatActivity {
         Log.e(TAG+" TableName: ", TableName + "");
         Log.e("CategoryId", CategoryId + "");
 
-        //create database
-        SQLiteDatabase myDatabase = openOrCreateDatabase("myDatabase",MODE_PRIVATE,null);
-
         itemArrayList = (ArrayList<TableCategoryItem>) toTable.getSerializableExtra("TableCategoryArrayList");
         PCArrayList = (ArrayList<ProductCategory>) toTable.getSerializableExtra("PCArrayList");
 //        if(PCArrayList.isEmpty()) {
@@ -102,7 +96,7 @@ public class SingleTableActivity extends AppCompatActivity {
                 Log.i("catId clicked", position + 1 + "");
                 Log.i("CategoryId", CategoryId + "");
                 int catId  = position + 1;
-                // DO something
+
                 Intent toProducts = new Intent(SingleTableActivity.this, ProductsActivity.class);
                 toProducts.putExtra("TableName", TableName);
                 toProducts.putExtra("TableId", TableId);
