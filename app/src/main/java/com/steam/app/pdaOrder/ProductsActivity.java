@@ -126,6 +126,7 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(ProductsActivity.this, mAdapter.getItem(i).getProductName(), Toast.LENGTH_LONG).show();
+                mAdapter.getItem(i).setMayNeedExtra(false);
                 productsToCart.add(mAdapter.getItem(i));
                 int listSize = productsToCart.size();
                 for (int j = 0; j < listSize; j++) {

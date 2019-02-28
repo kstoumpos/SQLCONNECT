@@ -1,14 +1,11 @@
 package com.steam.app.pdaOrder;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ConnectionClass {
 
@@ -29,7 +26,7 @@ public class ConnectionClass {
 
         try {
             Class.forName(classs);
-            ConnURL = "jdbc:jtds:sqlserver://" + ip  + ":1433" + ";"
+            ConnURL = "jdbc:jtds:sqlserver://" + ip  + ":" + port + ";"
                     + "databaseName=" + db + ";user=" + un + ";password="
                     + password + ";";
             conn = DriverManager.getConnection(ConnURL);

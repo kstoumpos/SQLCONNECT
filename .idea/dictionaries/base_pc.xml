@@ -3,14 +3,27 @@
     <words>
       <w>btnlogin</w>
       <w>catid</w>
+      <w>closeorder</w>
+      <w>coments</w>
       <w>compl</w>
+      <w>cust</w>
       <w>edtpass</w>
       <w>edtuserid</w>
+      <w>getm</w>
+      <w>jdbc</w>
+      <w>jtds</w>
+      <w>lstate</w>
+      <w>neworder</w>
       <w>paragwghs</w>
       <w>pbbar</w>
       <w>precent</w>
+      <w>productype</w>
+      <w>quant</w>
       <w>resultset</w>
+      <w>rsguid</w>
+      <w>shopid</w>
       <w>shoptype</w>
+      <w>sqlserver</w>
       <w>sqlstr</w>
       <w>successfull</w>
       <w>userid</w>

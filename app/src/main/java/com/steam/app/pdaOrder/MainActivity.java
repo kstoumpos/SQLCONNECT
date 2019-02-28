@@ -1,8 +1,11 @@
 package com.steam.app.pdaOrder;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity
     Button btnlogin;
     ProgressBar pbbar;
     Toolbar toolbar;
+    public static Context contextOfApplication;
+    int UserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        contextOfApplication = getApplicationContext();
 
         connectionClass = new ConnectionClass();
         edtuserid = findViewById(R.id.et_username);
@@ -48,6 +54,10 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    public static Context getContextOfApplication(){
+        return contextOfApplication;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -63,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(MainActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
             Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
             MainActivity.this.startActivity(myIntent);
             return true;
@@ -120,6 +130,12 @@ public class MainActivity extends AppCompatActivity
                         {
                             z = "Επιτυχής σύνδεση";
                             isSuccess = true;
+                            UserId = rs.getInt("user_id");
+                            //saving user_id to shared preferences
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putInt("user_id", UserId);
+                            editor.apply();
                         }
                         else
                         {

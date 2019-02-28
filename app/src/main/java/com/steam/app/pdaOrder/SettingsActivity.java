@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.putString(Password, mPassword);
                 Log.i("Password: ", mPassword);
                 editor.commit();
-                Toast.makeText(SettingsActivity.this,"Thanks",Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this,"Αποθήκευση",Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(SettingsActivity.this, MainActivity.class);
                 SettingsActivity.this.startActivity(myIntent);
             }

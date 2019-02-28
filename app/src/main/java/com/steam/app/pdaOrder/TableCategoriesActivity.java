@@ -115,7 +115,7 @@ public class TableCategoriesActivity extends AppCompatActivity {
                             myDatabase.execSQL(del2);
                             Log.i("error", "table Product_Category deleted");
                         }
-                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT);");
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT, product_type INT, order_printer INT, order_enb INT, guid VARCHAR, BonusActive INT, BonusType INT, BonusQuantity DOUBLE, DiscActive INT, DiscGenActive INT, ShopType INT, isCompl INT, ProductCategory VARCHAR);");
                         String sql3 = "SELECT name FROM Products;";
                         Cursor mCursor3 = myDatabase.rawQuery(sql3, null);
                         if (mCursor3.getCount() > 0) {
@@ -221,23 +221,43 @@ public class TableCategoriesActivity extends AppCompatActivity {
                         Log.e("Status: ", "rs2 not null");
 
                         //create table
-                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT);");
+                        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS Products(name VARCHAR,price DOUBLE, id INT, category_id INT, product_type INT, order_printer INT, order_enb INT, guid VARCHAR, BonusActive INT, BonusType INT, BonusQuantity DOUBLE, DiscActive INT, DiscGenActive INT, ShopType INT, isCompl INT, ProductCategory VARCHAR);");
                         while (rs3.next())
                         {
                             try {
                                 Log.e("name: ", rs3.getString("des"));
 
-                                ProductArrayList.add(new Product(rs3.getString("des"),rs3.getDouble("price"),rs3.getInt("id"),rs3.getInt("category_id")));
+                                ProductArrayList.add(new Product(rs3.getString("des"),rs3.getDouble("price"),rs3.getInt("id"),rs3.getInt("category_id"),rs3.getInt("type_paragwghs"),
+                                        rs3.getString("order_printer"), rs3.getInt("order_enb"), rs3.getString("guid"), rs3.getInt("bonus_active"),rs3.getInt("bonus_type"),rs3.getDouble("bonus_quantity"),
+                                        rs3.getInt("discount_active"),rs3.getInt("disc_gen_active"),rs3.getInt("ShopType"), rs3.getInt("isCompl"), rs3.getString("category_des")));
                                 //insert data into table
                                 String name = rs3.getString("des");
                                 int id = rs3.getInt("id");
                                 double price = rs3.getDouble("price");
                                 int catId = rs3.getInt("category_id");
-//                                Log.i("name", name);
-//                                Log.i("id", id+"");
-//                                Log.i("price", price+"");
-//                                Log.i("catid", catId+"");
-                                myDatabase.execSQL("INSERT INTO Products Values ('" + name + "' , '" + price + "' , '" + id + "', '" + catId + "' );");
+                                int ProductType = rs3.getInt("type_paragwghs");
+                                String order_printer = rs3.getString("order_printer");
+                                int order_enb = rs3.getInt("order_enb");
+                                String guid = rs3.getString("guid");
+                                int BonusActive = rs3.getInt("bonus_active");
+                                int BonusType = rs3.getInt("bonus_type");
+                                double BonusQuantity = rs3.getDouble("bonus_quantity");
+                                int DiscActive = rs3.getInt("discount_active");
+                                int DiscGenActive = rs3.getInt("disc_gen_active");
+                                int ShopType = rs3.getInt("ShopType");
+                                int isCompl = rs3.getInt("isCompl");
+                                String ProductCategory = rs3.getString("category_des");
+                                Log.i("ProductType", ProductType + "");
+                                Log.i("BonusType", BonusType + "");
+                                Log.i("BonusQuantity", BonusQuantity + "");
+                                Log.i("DiscActive", DiscActive + "");
+                                Log.i("DiscGenActive", DiscGenActive + "");
+                                Log.i("ShopType", ShopType + "");
+                                Log.i("isCompl", isCompl+"");
+
+                                myDatabase.execSQL("INSERT INTO Products Values ('" + name + "' , '" + price + "' , '" + id + "', '" + catId + "', '" + ProductType + "', '" + order_printer + "'" +
+                                        ", '" + order_enb + "', '" + guid + "', '" + BonusActive + "', '" + BonusType + "', '" + BonusQuantity + "', '" + DiscActive + "', '" + DiscGenActive + "'" +
+                                        ", '" + ShopType + "' , '" + isCompl + "', '" + ProductCategory + "' );");
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 Log.e("Status: ", "exception after query");
